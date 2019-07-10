@@ -5,13 +5,14 @@ import Config from "../App/Config";
 //Components
 import ThreadDescription from "../Components/ThreadDescription";
 
+
 class ThreadsIndex extends React.Component
 {
     constructor(props) {
         super(props);
 
         this.state = {
-            threads: []
+            threads: [],
         }
     }
 
@@ -31,7 +32,8 @@ class ThreadsIndex extends React.Component
         axios.get(endpoint)
         .then(({ data : threads}) => {
             this.setState({
-                threads: threads.data
+                threads: threads.data,
+                loader: false
             })
         })
         .catch(error => console.log(error))

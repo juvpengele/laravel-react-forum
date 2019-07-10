@@ -1,5 +1,7 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
+import Loader from "../Utils/Loader";
 /**
  * Map over threads and render threads
  * @param threads
@@ -22,7 +24,11 @@ const _showThreads = function (threads) {
                     </small>
                 </div>
                 <div className="card-body">
-                    <h4 className="card-title">{ thread.title }</h4>
+                    <Link to={ `/threads/${thread.slug }` }>
+                        <h5 className="card-title" >
+                            { thread.title }
+                        </h5>
+                    </Link>
                     <div>
                         <span className="mr-2">
                             <i className="fa fa-comments"/> 0
@@ -45,6 +51,8 @@ const _showThreads = function (threads) {
 const ThreadDescription = ({ threads }) => {
     return (
         <div className="col-md-8">
+            { threads.length === 0 && <Loader show={true}/> }
+
             { _showThreads(threads) }
         </div>
     )
