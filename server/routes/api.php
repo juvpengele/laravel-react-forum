@@ -17,10 +17,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource("threads", "ThreadsController")->names([
-    "index"     => "api.threads.index",
-    "show"      => "api.threads.show",
-    "update"    => "api.threads.update",
-    "destroy"   => "api.threads.destroy",
-    "store"     => "api.threads.store"
-]);
+Route::group(['middleware' => 'cors'], function() {
+
+    Route::apiResource("threads", "ThreadsController")->names([
+        "index"     => "api.threads.index",
+        "show"      => "api.threads.show",
+        "update"    => "api.threads.update",
+        "destroy"   => "api.threads.destroy",
+        "store"     => "api.threads.store"
+    ]);
+
+});
+
+
