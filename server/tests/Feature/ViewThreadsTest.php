@@ -11,22 +11,30 @@ class ViewThreadsTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
-    public function a_guest_can_see_all_threads()
+
+    public function test_a_guest_can_see_all_threads()
     {
+        $this->withExceptionHandling();
+
         create(Thread::class, [], 5);
 
         $response = $this->getJson(route("api.threads.index"))->json();
 
+        dd($response);
+
         $this->assertCount(5, $response["data"]);
     }
 
-    /** @test */
-    public function a_guest_can_see_a_single_thread()
+
+    /**
+     * @test
+     *
+     */
+    public function test_a_guest_can_see_a_single_thread()
     {
         $thread = create(Thread::class);
 
-        $response = $this->getJson(route("api.threads.show", $thread));
+        $response = $this->get(route("api.threads.show", $thread));
 
         $this->assertEquals(200, $response->getStatusCode());
 
