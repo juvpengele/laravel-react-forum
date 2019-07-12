@@ -4,6 +4,7 @@ import Config from "../App/Config";
 
 //Components
 import ThreadDescription from "../Components/ThreadDescription";
+import Paginator from "../Components/Paginator/Pagination";
 
 
 class ThreadsIndex extends React.Component
@@ -12,14 +13,19 @@ class ThreadsIndex extends React.Component
         super(props);
 
         this.state = {
-            threads: [],
+            threads: {
+                data: [],
+                meta: null
+            },
+            loader: true,
+            endpoint: `${Config.RemoteBaseUrl}/threads`
         }
     }
 
     componentWillMount() {
         document.title = "React Forum";
 
-        let endpoint = `${Config.remote_base_url}/threads`;
+        let endpoint = `${Config.RemoteBaseUrl}/threads`;
         this._loadThreads(endpoint);
     }
 
@@ -30,9 +36,12 @@ class ThreadsIndex extends React.Component
      */
     _loadThreads = (endpoint) => {
         axios.get(endpoint)
-        .then(({ data : threads}) => {
+        .then(({data: threads}) => {
             this.setState({
-                threads: threads.data,
+                threads: {
+                    data: threads.data,
+                    meta: threads.meta
+                },
                 loader: false
             })
         })
@@ -40,10 +49,26 @@ class ThreadsIndex extends React.Component
     };
 
 
+    _changePage = (page) => {
+        let endpoint = this.state.endpoint + `?page=${page}`;
+
+        this._loadThreads(endpoint);
+
+        window.scroll({
+            behavior: 'smooth',
+            left: 0,
+            top: 0
+        });
+    };
+
+
     render() {
         return (
             <div className="row">
-                <ThreadDescription threads={this.state.threads}/>
+                <ThreadDescription threads={this.state.threads.data}/>
+                <div className="col-md-12">
+                    <Paginator meta={this.state.threads.meta}  changePage={this._changePage}   />
+                </div>
             </div>
         );
     }

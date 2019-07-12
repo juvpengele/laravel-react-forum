@@ -11,6 +11,7 @@ $factory->define(Thread::class, function (Faker $faker) {
         "title" => $title,
         "slug" => \Illuminate\Support\Str::slug($title),
         "content" => $faker->text,
-        "user_id" => factory(\App\User::class)->create()->id
+        "user_id" => factory(\App\User::class)->create()->id,
+        "category_id"   => factory(\App\Models\Category::class)->create()->id
     ];
 });

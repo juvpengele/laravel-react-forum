@@ -20,8 +20,6 @@ class ViewThreadsTest extends TestCase
 
         $response = $this->getJson(route("api.threads.index"))->json();
 
-        dd($response);
-
         $this->assertCount(5, $response["data"]);
     }
 
@@ -40,6 +38,16 @@ class ViewThreadsTest extends TestCase
 
         $jsonResponse = $response->json();
         $this->assertEquals($thread->title, $jsonResponse["data"]["title"]);
+    }
+
+    /** @test */
+    public function guest_can_fetch_only_ten_threads_at_once()
+    {
+        create(Thread::class, [],  20);
+
+        $response = $this->getJson(route("api.threads.index"))->json();
+
+        $this->assertCount(10, $response["data"]);
     }
 
 }

@@ -39,8 +39,7 @@ const _showThreads = function (threads) {
                     </div>
                 </div>
                 <div className="card-footer">
-                    <span className="badge badge-pill badge-info px-2 py-1 mr-2">Tags</span>
-                    <span className="badge badge-pill badge-info px-2 py-1 mr-2">Tags</span>
+                    <a className="btn btn-info rounded-pill" href="#">{ thread.category.name }</a>
                 </div>
             </div>
         ))

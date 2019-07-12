@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Models\Category;
 use App\Models\Thread;
 use App\User;
 use Tests\TestCase;
@@ -27,5 +28,14 @@ class ThreadTest extends TestCase
         $thread = create(Thread::class);
 
         $this->assertNotNull($thread->description);
+    }
+
+    /** @test */
+    public function a_thread_belongs_to_a_category()
+    {
+        $category = create(Category::class);
+        $thread = create(Thread::class, ["category_id" => $category->id]);
+
+        $this->assertEquals($category->id, $thread->category->id);
     }
 }
