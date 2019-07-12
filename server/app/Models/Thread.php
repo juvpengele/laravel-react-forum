@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
 {
-    public $appends = ["description"];
-    public $with = ["category"];
+    public $with = ["category", "creator"];
+    public $appends = ['ago'];
 
     /**
      * Relation between a thread and the creator
@@ -29,6 +29,15 @@ class Thread extends Model
     }
 
     /**
+     * Relationship between Thread and Reply
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
+    }
+
+    /**
      * The key name for model binding route
      * @return string
      */
@@ -43,6 +52,11 @@ class Thread extends Model
     public function getDescriptionAttribute()
     {
         return substr($this->content, 0, 50). "...";
+    }
+
+    public function getAgoAttribute()
+    {
+        return $this->created_at->diffForHumans();
     }
 
 

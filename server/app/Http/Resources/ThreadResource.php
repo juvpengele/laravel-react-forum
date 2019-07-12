@@ -18,12 +18,14 @@ class ThreadResource extends JsonResource
             "id" => $this->id,
             "title" => $this->title,
             "slug"      => $this->slug,
-            "description"   => $this->description,
             "content"   => $this->content,
             "creator"   => $this->creator,
-            "created_at"    => $this->created_at->diffForHumans(),
+            "created_at"    => $this->created_at,
             "category" => $this->category,
-            "visits_count"  => $this->visits_count
+            "visits_count"  => $this->visits_count,
+            "ago"           => $this->ago,
+            "replies"   => $this->replies,
+            "replies_count" => $this->replies()->count()
         ];
     }
 }

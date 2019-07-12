@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Models\Category;
+use App\Models\Reply;
 use App\Models\Thread;
 use App\User;
 use Tests\TestCase;
@@ -37,5 +38,14 @@ class ThreadTest extends TestCase
         $thread = create(Thread::class, ["category_id" => $category->id]);
 
         $this->assertEquals($category->id, $thread->category->id);
+    }
+
+    /** @test */
+    public function a_thread_has_replies()
+    {
+        $thread = create(Thread::class);
+        create(Reply::class, ["thread_id" => $thread->id], 2);
+
+        $this->assertCount(2, $thread->replies);
     }
 }

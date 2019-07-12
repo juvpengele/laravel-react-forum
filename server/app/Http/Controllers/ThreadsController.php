@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ThreadCollection;
 use App\Http\Resources\ThreadResource;
 use App\Models\Category;
 use App\Models\Thread;
@@ -12,13 +13,18 @@ class ThreadsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     * @return ThreadCollection
      */
     public function index()
     {
-        $threads = Thread::latest()->paginate(10);
+        $threads = Thread::with(["category", "creator"])
+                            ->withCount("replies")
+                            ->latest()
+                            ->paginate(10,
+                                ["title", "visits_count", "slug", "created_at", "user_id", "category_id"]
+                            );
 
-        return ThreadResource::collection($threads);
+        return new ThreadCollection($threads);
     }
 
     /**
