@@ -52,4 +52,17 @@ class ViewThreadsTest extends TestCase
         $this->assertCount(10, $response["data"]);
     }
 
+    /** @test */
+    public function when_we_visit_a_thread_its_visits_count_increments()
+    {
+        $thread = create(Thread::class);
+
+        $this->assertEquals(0, $thread->visits_count);
+
+        $this->get(route("api.threads.show", ["category" => $thread->category, "thread" => $thread]));
+        $this->get(route("api.threads.show", ["category" => $thread->category, "thread" => $thread]));
+
+        $this->assertEquals(2, $thread->fresh()->visits_count);
+    }
+
 }

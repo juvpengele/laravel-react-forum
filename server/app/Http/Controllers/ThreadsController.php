@@ -41,6 +41,8 @@ class ThreadsController extends Controller
      */
     public function show(Category $category, Thread $thread)
     {
+        $thread->increment("visits_count");
+
         return new ThreadResource($thread);
     }
 

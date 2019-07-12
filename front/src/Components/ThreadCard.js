@@ -1,5 +1,4 @@
 import React from "react";
-import {Link} from "react-router-dom";
 
 const ThreadCard = ({ thread }) => {
 
@@ -34,7 +33,7 @@ const ThreadCard = ({ thread }) => {
                             <i className="fa fa-comments"/> 0
                         </span>
                         <span>
-                            <i className="fa fa-eye"/> 0
+                            <i className="fa fa-eye"/> { thread.visits_count }
                         </span>
                     </div>
                 </div>

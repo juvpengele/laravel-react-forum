@@ -22,7 +22,8 @@ class ThreadResource extends JsonResource
             "content"   => $this->content,
             "creator"   => $this->creator,
             "created_at"    => $this->created_at->diffForHumans(),
-            "category" => $this->category
+            "category" => $this->category,
+            "visits_count"  => $this->visits_count
         ];
     }
 }

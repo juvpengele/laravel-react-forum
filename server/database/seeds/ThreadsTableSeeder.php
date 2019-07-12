@@ -15,7 +15,8 @@ class ThreadsTableSeeder extends Seeder
 
         for($i = 0; $i < 30; $i++) {
             factory(\App\Models\Thread::class)->create([
-                "category_id"   => rand(1, 5)
+                "category_id"   => rand(1, 5),
+                "visits_count"  => rand(1, 100)
             ]);
         }
 
