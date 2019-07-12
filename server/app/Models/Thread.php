@@ -29,6 +29,15 @@ class Thread extends Model
     }
 
     /**
+     * The key name for model binding route
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    /**
      * @return string
      */
     public function getDescriptionAttribute()

@@ -18,14 +18,14 @@ class ThreadsIndex extends React.Component
                 meta: null
             },
             loader: true,
-            endpoint: `${Config.RemoteBaseUrl}/threads`
+            endpoint: `${Config.remoteBaseUrl}/threads`
         }
     }
 
     componentWillMount() {
         document.title = "React Forum";
 
-        let endpoint = `${Config.RemoteBaseUrl}/threads`;
+        let endpoint = `${Config.remoteBaseUrl}/threads`;
         this._loadThreads(endpoint);
     }
 
@@ -67,7 +67,7 @@ class ThreadsIndex extends React.Component
             <div className="row">
                 <ThreadDescription threads={this.state.threads.data}/>
                 <div className="col-md-12">
-                    <Paginator meta={this.state.threads.meta}  changePage={this._changePage}   />
+                    <Paginator meta={this.state.threads.meta}  changePage={this._changePage} />
                 </div>
             </div>
         );

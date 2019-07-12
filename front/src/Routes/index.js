@@ -15,7 +15,7 @@ const Routes = () => (
 
         <div className="container mt-4">
             <Route path="/" exact component={ThreadsIndex} name="threads.index" />
-            <Route path="/threads/:slug" component={ThreadShow} name="threads.show"/>
+            <Route path="/:category/:thread" component={ThreadShow} name="threads.show"/>
         </div>
 
         <Footer/>

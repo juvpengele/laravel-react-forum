@@ -24,7 +24,7 @@ const _showThreads = function (threads) {
                     </small>
                 </div>
                 <div className="card-body">
-                    <Link to={ `/threads/${thread.slug }` }>
+                    <Link to={ `/${thread.category.slug}/${thread.slug }` }>
                         <h5 className="card-title" >
                             { thread.title }
                         </h5>
