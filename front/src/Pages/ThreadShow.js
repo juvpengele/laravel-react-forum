@@ -3,16 +3,18 @@ import config from "../App/Config";
 import axios from "axios";
 
 //Components
-import ThreadCard from "../Components/ThreadCard";
+import ThreadCard from "../Components/Threads/ThreadCard";
+import Loader from "../Components/Utils/Loader";
+import Replies from "../Components/Replies/Replies";
 
 class ThreadShow extends React.Component{
     constructor(props) {
         super(props);
 
         this.state = {
-            thread: null
+            thread: null,
+            loading: true,
         }
-
     }
 
     componentDidMount() {
@@ -25,7 +27,12 @@ class ThreadShow extends React.Component{
     _loadThread(endpoint) {
         axios.get(endpoint)
             .then(({data: thread}) => {
-                this.setState({ thread: thread.data })
+                this.setState({
+                    thread: thread.data,
+                    loading: false
+                });
+
+                document.title = `${this.state.thread.title} | Forum`
             })
             .catch(error => console.log(error));
     }
@@ -34,9 +41,12 @@ class ThreadShow extends React.Component{
         return (
             <div className="row">
                 <div className="col-md-8">
+                    { this.state.loading && <Loader show={true}/>}
                     <ThreadCard thread={this.state.thread} />
-                </div>
 
+
+                    { this.state.thread && <Replies replies={this.state.thread.replies}/> }
+                </div>
             </div>
         )
     }

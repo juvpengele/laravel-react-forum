@@ -52,7 +52,6 @@ const Paginator = (props) =>  {
         return '';
     };
 
-
     return (
         <div>
             <ul className="pagination">

@@ -20,7 +20,7 @@ const _showThreads = function (threads) {
                     </div>
                     <small className="text-secondary">
                         <i className="fa fa-clock-o"/>
-                        { thread.created_at }
+                        { thread.ago }
                     </small>
                 </div>
                 <div className="card-body">
@@ -31,7 +31,7 @@ const _showThreads = function (threads) {
                     </Link>
                     <div>
                         <span className="mr-2">
-                            <i className="fa fa-comments"/> 0
+                            <i className="fa fa-comments"/> { thread.replies_count }
                         </span>
                         <span>
                             <i className="fa fa-eye"/> { thread.visits_count }

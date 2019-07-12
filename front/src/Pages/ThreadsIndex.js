@@ -3,7 +3,7 @@ import axios from "axios";
 import Config from "../App/Config";
 
 //Components
-import ThreadDescription from "../Components/ThreadDescription";
+import ThreadDescription from "../Components/Threads/ThreadDescription";
 import Paginator from "../Components/Paginator/Pagination";
 
 
@@ -23,7 +23,7 @@ class ThreadsIndex extends React.Component
     }
 
     componentWillMount() {
-        document.title = "React Forum";
+        document.title = "Forum";
 
         let endpoint = `${Config.remoteBaseUrl}/threads`;
         this._loadThreads(endpoint);
