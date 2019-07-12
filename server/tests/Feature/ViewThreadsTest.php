@@ -30,9 +30,11 @@ class ViewThreadsTest extends TestCase
      */
     public function test_a_guest_can_see_a_single_thread()
     {
+        $this->withoutExceptionHandling();
+
         $thread = create(Thread::class);
 
-        $response = $this->get(route("api.threads.show", $thread));
+        $response = $this->get(route("api.threads.show", ["category" => $thread->category, "thread" => $thread]));
 
         $this->assertEquals(200, $response->getStatusCode());
 

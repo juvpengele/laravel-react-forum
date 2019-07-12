@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ThreadResource;
+use App\Models\Category;
 use App\Models\Thread;
 use Illuminate\Http\Request;
 
@@ -32,12 +33,13 @@ class ThreadsController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the thread resource.
      *
+     * @param Category $category
      * @param Thread $thread
      * @return ThreadResource
      */
-    public function show(Thread $thread)
+    public function show(Category $category, Thread $thread)
     {
         return new ThreadResource($thread);
     }
