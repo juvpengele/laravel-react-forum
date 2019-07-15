@@ -15,11 +15,13 @@ class RepliesTableSeeder extends Seeder
         $faker = Faker::create();
         $threads = \App\Models\Thread::all();
 
-
-        $threads->each->replies()->create([
-            "user_id"   => factory(\App\User::class)->create()->id,
-            "content"   => $faker->paragraph,
-        ]);
-
+        foreach ($threads as $thread) {
+            \Illuminate\Support\Facades\DB::table('replies')->insert([
+                "user_id"   => factory(\App\User::class)->create()->id,
+                "content"   => $faker->paragraph,
+                'thread_id' => $thread->id,
+                "created_at"    => now()
+            ]);
+        }
     }
 }

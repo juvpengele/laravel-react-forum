@@ -39,7 +39,9 @@ const _showThreads = function (threads) {
                     </div>
                 </div>
                 <div className="card-footer">
-                    <a className="btn btn-info rounded-pill" href="#">{ thread.category.name }</a>
+                    <Link className="btn btn-info rounded-pill" href="#"
+                        to={`/categories/${thread.category.slug}/posts`}
+                    >{ thread.category.name }</Link>
                 </div>
             </div>
         ))
@@ -49,7 +51,7 @@ const _showThreads = function (threads) {
 
 const ThreadDescription = ({ threads }) => {
     return (
-        <div className="col-md-8">
+        <div className="col-md-12">
             { threads.length === 0 && <Loader show={true}/> }
 
             { _showThreads(threads) }

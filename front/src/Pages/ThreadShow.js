@@ -21,6 +21,7 @@ class ThreadShow extends React.Component{
         const { category, thread } = this.props.match.params;
 
         let endpoint =  `${config.remoteBaseUrl}/${category}/${thread}`;
+
         this._loadThread(endpoint);
     }
 
@@ -50,15 +51,14 @@ class ThreadShow extends React.Component{
 
     render() {
         return (
-            <div className="row">
-                <div className="col-md-8">
-                    { this.state.loading && <Loader show={true}/>}
-                    <ThreadCard thread={this.state.thread} />
 
+            <div className="col-md-12">
+                { this.state.loading && <Loader show={true}/>}
+                <ThreadCard thread={this.state.thread} />
 
-                    { this.state.thread && <Replies replies={this.state.thread.replies}/> }
-                </div>
+                { this.state.thread && <Replies replies={this.state.thread.replies}/> }
             </div>
+
         )
     }
 }

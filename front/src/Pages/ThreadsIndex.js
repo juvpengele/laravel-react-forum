@@ -25,8 +25,32 @@ class ThreadsIndex extends React.Component
     componentWillMount() {
         document.title = "Forum";
 
-        let endpoint = `${Config.remoteBaseUrl}/threads`;
+        let endpoint = this._getEndpoint(this.props.location);
         this._loadThreads(endpoint);
+    }
+
+    componentWillReceiveProps(nextProps, nextContext) {
+        let endpoint = this._getEndpoint(nextProps.location);
+        this._loadThreads(endpoint);
+    }
+
+    /**
+     * Return endpoint to load threads according to the location pathname
+     * @param pathname
+     * @returns {string}
+     * @private
+     */
+    _getEndpoint({ pathname}) {
+        let endpoint = Config.remoteBaseUrl;
+
+        if(pathname) {
+
+            if(pathname === '/') {
+                return  `${endpoint}/threads`;
+            }
+            return endpoint + pathname
+        }
+        return  `${endpoint}/threads`;
     }
 
     /**
@@ -49,7 +73,11 @@ class ThreadsIndex extends React.Component
     };
 
 
-    _changePage = (page) => {
+    /**
+     * Pagination change page handler
+     * @param page
+     */
+    changePage = (page) => {
         let endpoint = this.state.endpoint + `?page=${page}`;
 
         this._loadThreads(endpoint);
@@ -67,7 +95,7 @@ class ThreadsIndex extends React.Component
             <div className="row">
                 <ThreadDescription threads={this.state.threads.data}/>
                 <div className="col-md-12">
-                    <Paginator meta={this.state.threads.meta}  changePage={this._changePage} />
+                    <Paginator meta={this.state.threads.meta}  changePage={this.changePage} />
                 </div>
             </div>
         );

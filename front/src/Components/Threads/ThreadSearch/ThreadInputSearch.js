@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
 
 
-const ThreadInputSearch = (props, context) => {
+const ThreadInputSearch = (props) => {
 
     const [query, setQuery] = useState('');
 

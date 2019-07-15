@@ -13,7 +13,6 @@ class ThreadSearch extends React.Component {
             threads: [],
             showResult: false
         };
-        console.log(this.props);
     }
 
     getSearchValue = ({ showResult, value}) => {
