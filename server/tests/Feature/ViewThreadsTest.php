@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Category;
 use App\Models\Reply;
 use App\Models\Thread;
 use Tests\TestCase;
@@ -89,6 +90,18 @@ class ViewThreadsTest extends TestCase
         $response = $this->getJson("/api/threads?search=special")->json();
 
         $this->assertCount(1, $response["data"]);
+    }
+
+    /** @test */
+    public function we_can_see_posts_only_from_a_category()
+    {
+        $category = create(Category::class);
+        create(Thread::class, ['category_id' => $category->id], 2);
+        create(Thread::class, [], 2);
+
+        $response = $this->getJson(route('api.categories.posts', ['category' => $category]))->json();
+
+        $this->assertCount(2, $response["data"]);
     }
 
 }

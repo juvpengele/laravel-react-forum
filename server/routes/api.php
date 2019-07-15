@@ -25,5 +25,9 @@ Route::group(["middleware" => "cors"], function () {
         "destroy"   => "api.threads.destroy"
     ])->except("show");
     Route::get("{category}/{thread}", "ThreadsController@show")->name("api.threads.show");
+    Route::get('/categories/{category}/posts', 'ThreadsController@index')->name('api.categories.posts');
+
+
+    Route::get('/categories', 'CategoriesController@index')->name('api.categories.index');
 
 });

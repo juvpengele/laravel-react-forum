@@ -11,7 +11,7 @@ const ThreadInputSearch = (props, context) => {
 
         setQuery(value);
 
-        if(value.length > 3) {
+        if(value.length > 4) {
             props.search({
                 showResult: true,
                 value

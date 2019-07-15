@@ -5,7 +5,7 @@ import ThreadSearch from "../../Components/Threads/ThreadSearch";
 
 const Header = (props) => {
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-primary fixed-top ">
             <Link className="navbar-brand" to="/">Forum</Link>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
                 aria-label="Toggle navigation">

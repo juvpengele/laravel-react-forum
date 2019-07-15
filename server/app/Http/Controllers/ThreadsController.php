@@ -13,11 +13,18 @@ class ThreadsController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param null $categorySlug
      * @return ThreadCollection
      */
-    public function index()
+    public function index($categorySlug = null)
     {
         $threads = Thread::with(["category", "creator"]);
+
+
+       if(! is_null($categorySlug)) {
+           $category = Category::whereSlug($categorySlug)->first();
+           $threads->where(['category_id' => $category->id]);
+       }
 
         if($searchedTerm = request("search")) {
             $threads->search($searchedTerm);
