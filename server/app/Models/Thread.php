@@ -61,8 +61,7 @@ class Thread extends Model
 
     public function scopeSearch($query, $term)
     {
-        return $query->where('title', "LIKE", "% {$term} %")
-                    ->orWhere('content', 'LIKE', "% {$term} %");
+        return $query->where('title', "LIKE", "%{$term}%");
     }
 
 

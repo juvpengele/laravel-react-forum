@@ -11,7 +11,7 @@ import NotFound from "../Pages/NotFound";
 
 const Routes = () => (
     <Router>
-        <Header/>
+        <Header />
 
         <div className="container mt-4">
             <Route path="/" exact component={ThreadsIndex} name="threads.index" />

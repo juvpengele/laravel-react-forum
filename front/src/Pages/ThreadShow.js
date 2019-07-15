@@ -24,6 +24,17 @@ class ThreadShow extends React.Component{
         this._loadThread(endpoint);
     }
 
+    componentWillReceiveProps(nextProps, nextContext) {
+        const { pathname } = nextProps.location;
+
+        if(pathname) {
+            this.setState({
+                loader: true
+            });
+            this._loadThread(config.remoteBaseUrl + pathname);
+        }
+    }
+
     _loadThread(endpoint) {
         axios.get(endpoint)
             .then(({data: thread}) => {

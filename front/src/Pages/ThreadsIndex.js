@@ -19,7 +19,7 @@ class ThreadsIndex extends React.Component
             },
             loader: true,
             endpoint: `${Config.remoteBaseUrl}/threads`
-        }
+        };
     }
 
     componentWillMount() {
