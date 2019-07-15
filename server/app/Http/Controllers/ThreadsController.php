@@ -17,12 +17,17 @@ class ThreadsController extends Controller
      */
     public function index()
     {
-        $threads = Thread::with(["category", "creator"])
-                            ->withCount("replies")
-                            ->latest()
-                            ->paginate(10,
-                                ["title", "visits_count", "slug", "created_at", "user_id", "category_id"]
-                            );
+        $threads = Thread::with(["category", "creator"]);
+
+        if($searchedTerm = request("search")) {
+            $threads->search($searchedTerm);
+        }
+
+        $threads = $threads->withCount("replies")
+            ->latest()
+            ->paginate(10,
+                ["title", "visits_count", "slug", "created_at", "user_id", "category_id"]
+            );
 
         return new ThreadCollection($threads);
     }

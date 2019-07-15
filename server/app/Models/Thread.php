@@ -59,5 +59,11 @@ class Thread extends Model
         return $this->created_at->diffForHumans();
     }
 
+    public function scopeSearch($query, $term)
+    {
+        return $query->where('title', "LIKE", "% {$term} %")
+                    ->orWhere('content', 'LIKE', "% {$term} %");
+    }
+
 
 }

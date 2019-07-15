@@ -80,4 +80,15 @@ class ViewThreadsTest extends TestCase
         $this->assertCount(5, $response["data"]["replies"]);
     }
 
+    /** @test */
+    public function guest_can_search_posts()
+    {
+        create(Thread::class, ['title' => 'A special title']);
+        create(Thread::class, [], 5);
+
+        $response = $this->getJson("/api/threads?search=special")->json();
+
+        $this->assertCount(1, $response["data"]);
+    }
+
 }

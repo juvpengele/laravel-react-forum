@@ -48,4 +48,14 @@ class ThreadTest extends TestCase
 
         $this->assertCount(2, $thread->replies);
     }
+
+    /** @test */
+    public function it_can_be_filter_through_search()
+    {
+        create(Thread::class, ['title' => 'A dummy test']);
+        create(Thread::class, [], 5);
+
+        $this->assertCount(1, Thread::search('dummy')->get());
+
+    }
 }
