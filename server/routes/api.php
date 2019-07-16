@@ -27,7 +27,18 @@ Route::group(["middleware" => "cors"], function () {
     Route::get("{category}/{thread}", "ThreadsController@show")->name("api.threads.show");
     Route::get('/categories/{category}/posts', 'ThreadsController@index')->name('api.categories.posts');
 
-
     Route::get('/categories', 'CategoriesController@index')->name('api.categories.index');
+
+
+    //Authentication
+    Route::group([ 'middleware' => 'api', 'prefix' => 'auth'], function () {
+
+        Route::post('register', 'AuthController@register')->name('api.auth.register');
+        Route::post('login', 'AuthController@login');
+        Route::post('logout', 'AuthController@logout');
+        Route::post('refresh', 'AuthController@refresh');
+        Route::post('me', 'AuthController@me');
+
+    });
 
 });
