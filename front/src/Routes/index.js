@@ -9,22 +9,21 @@ import Footer from "../Pages/Layouts/Footer";
 import NotFound from "../Pages/NotFound";
 import CategoriesList from "../Components/Categories/CategoriesList";
 
+import AuthLayoutRoutes from './AuthLayoutRoutes';
+import ThreadLayoutRoutes from './ThreadLayoutRoutes';
+import SignUp from "../Pages/Auth/Signup";
 
 const Routes = () => (
     <Router>
         <Header />
 
         <div className="container mt-4">
-            <div className="row">
-                <div className="col-md-8">
-                    <Route path="/" exact component={ ThreadsIndex } name="threads.index" />
-                    <Route path="/:category/:thread" component={ ThreadShow } name="threads.show" exact/>
-                    <Route path="/categories/:category/posts" component={ ThreadsIndex } />
-                </div>
-                <div className="col-md-4">
-                    <CategoriesList/>
-                </div>
-            </div>
+
+            <ThreadLayoutRoutes path="/" exact component={ ThreadsIndex } name="threads.index" />
+            <ThreadLayoutRoutes path="/:category/:thread" component={ ThreadShow } name="threads.show" exact/>
+            <ThreadLayoutRoutes path="/categories/:category/posts" component={ ThreadsIndex } />
+
+            <AuthLayoutRoutes path="/signup" component={ SignUp } exact />
         </div>
 
         <Footer/>

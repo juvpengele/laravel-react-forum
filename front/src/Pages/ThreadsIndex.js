@@ -30,8 +30,10 @@ class ThreadsIndex extends React.Component
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        let endpoint = this._getEndpoint(nextProps.location);
-        this._loadThreads(endpoint);
+        if(this.props.location.pathname !== nextProps.location.pathname) {
+            let endpoint = this._getEndpoint(nextProps.location);
+            this._loadThreads(endpoint);
+        }
     }
 
     /**
@@ -44,7 +46,6 @@ class ThreadsIndex extends React.Component
         let endpoint = Config.remoteBaseUrl;
 
         if(pathname) {
-
             if(pathname === '/') {
                 return  `${endpoint}/threads`;
             }

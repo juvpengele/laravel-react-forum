@@ -31,3 +31,9 @@
     transform: rotate(360deg);
   }
 }
+
+.btn-info:hover {
+  color: #fff !important;
+  background-color: #2384c6;
+  border-color: #217dbb;
+}
