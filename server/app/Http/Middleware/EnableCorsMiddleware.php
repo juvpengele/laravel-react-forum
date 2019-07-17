@@ -15,6 +15,7 @@ class EnableCorsMiddleware
      */
     public function handle($request, Closure $next)
     {
+
         // It rewrites headers and cause error during tests
         if(config("app.env") !== "testing") {
             header('Access-Control-Allow-Origin: *');
