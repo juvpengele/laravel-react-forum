@@ -18,7 +18,9 @@ class ReplyResource extends JsonResource
             'id'        => $this->id,
             'content'   => $this->content,
             'thread_id' => $this->thread_id,
-            'creator'   => $this->creator
+            'creator'   => $this->creator,
+            'ago'       => $this->ago,
+            'user_id'   => $this->creator->id
         ];
     }
 }

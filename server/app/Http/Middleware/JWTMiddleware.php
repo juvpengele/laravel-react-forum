@@ -3,9 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use JWTAuth;
 
-class JWTMiddlware
+class JWTMiddleware
 {
     /**
      * Handle an incoming request.
@@ -28,6 +28,6 @@ class JWTMiddlware
                 return response()->json(['status' => 'Authorization Token not found'], 400);
             }
         }
-        return $next;
+        return $next($request);
     }
 }

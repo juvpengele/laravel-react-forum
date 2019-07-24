@@ -15,6 +15,7 @@ class CreateReplyTest extends TestCase
     /** @test */
     public function an_authenticated_user_can_post_replies()
     {
+        $this->withoutExceptionHandling();
 
         $user = create(User::class);
         $this->signIn($user);
@@ -39,7 +40,7 @@ class CreateReplyTest extends TestCase
 
         $thread = create(Thread::class);
 
-        $jsonResponse = $this->postJson("/api/replies?token=lorem", [
+        $this->postJson("/api/replies?token=lorem", [
             'content' => 'Lorem',
             'thread_id' => $thread->id
         ])->json();

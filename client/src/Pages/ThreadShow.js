@@ -1,6 +1,7 @@
 import React from "react";
 import config from "../Services/Config";
 import axios from "axios";
+import { connect } from 'react-redux';
 
 //Components
 import ThreadCard from "../Components/Threads/ThreadCard";
@@ -14,8 +15,11 @@ class ThreadShow extends React.Component{
 
         this.state = {
             thread: null,
+            replies: [],
             loading: true,
-        }
+        };
+
+        this._addReply = this._addReply.bind(this);
     }
 
     componentDidMount() {
@@ -42,12 +46,21 @@ class ThreadShow extends React.Component{
             .then(({data: thread}) => {
                 this.setState({
                     thread: thread.data,
+                    replies: thread.data.replies,
                     loading: false
                 });
-
                 document.title = `${this.state.thread.title} | Forum`
             })
             .catch(error => console.log(error));
+    }
+
+    _addReply(reply) {
+        this.setState((prevState) => {
+            return {
+                replies: [...prevState.replies, reply],
+                thread: {...prevState.thread, replies_count: prevState.thread.replies_count + 1 }
+            }
+        })
     }
 
     render() {
@@ -57,13 +70,18 @@ class ThreadShow extends React.Component{
                 { this.state.loading && <Loader show={true}/>}
                 <ThreadCard thread={this.state.thread} />
 
-                { this.state.thread && <Replies replies={this.state.thread.replies}/> }
+                { this.state.thread && <Replies replies={this.state.replies}/> }
 
-                <ReplyForm/>
+                {
+                    this.props.auth.loggedIn &&
+                    this.state.thread &&
+                    <ReplyForm threadId={this.state.thread.id} addReply={this._addReply}/>
+                }
             </div>
-
         )
     }
 }
 
-export default ThreadShow;
+const mapStateToProps = (state) => ({ auth : state.auth });
+
+export default connect(mapStateToProps)(ThreadShow);
