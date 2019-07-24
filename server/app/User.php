@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Reply;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -62,5 +63,10 @@ class User extends Authenticatable implements JWTSubject
     public function setPasswordAttribute($password)
     {
         $this->attributes['password'] = bcrypt($password);
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(Reply::class, 'user_id');
     }
 }

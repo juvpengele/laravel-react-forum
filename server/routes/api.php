@@ -30,6 +30,9 @@ Route::group(["middleware" => "cors"], function () {
     Route::get('/categories', 'CategoriesController@index')->name('api.categories.index');
 
 
+    //Replies
+    Route::post('/replies', 'RepliesController@store')->name('api.replies.store');
+
     //Authentication
     Route::post('register', 'AuthController@register')->name('api.auth.register');
     Route::post('login', 'AuthController@login');

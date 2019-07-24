@@ -9,6 +9,7 @@ class Reply extends Model
 {
     public $with = ["creator"];
     public $appends = ["ago"];
+    protected $fillable = ['user_id', 'thread_id', 'content'];
 
     public function creator()
     {
