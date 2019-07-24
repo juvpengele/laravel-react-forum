@@ -7,7 +7,8 @@ const INITIAL_STATE = {
     token
 };
 
-const authReducers = (state = INITIAL_STATE, action) => {
+
+const authReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case "LOGIN":
             Storage.setItem('access_token', action.value.access_token);
@@ -25,4 +26,4 @@ const authReducers = (state = INITIAL_STATE, action) => {
     }
 };
 
-export default authReducers
+export default authReducer;

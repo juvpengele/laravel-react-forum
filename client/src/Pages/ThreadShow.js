@@ -6,6 +6,7 @@ import axios from "axios";
 import ThreadCard from "../Components/Threads/ThreadCard";
 import Loader from "../Components/Utils/Loader";
 import Replies from "../Components/Replies/Replies";
+import ReplyForm from '../Components/Replies/ReplyForm'
 
 class ThreadShow extends React.Component{
     constructor(props) {
@@ -57,6 +58,8 @@ class ThreadShow extends React.Component{
                 <ThreadCard thread={this.state.thread} />
 
                 { this.state.thread && <Replies replies={this.state.thread.replies}/> }
+
+                <ReplyForm/>
             </div>
 
         )

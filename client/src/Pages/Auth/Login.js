@@ -83,6 +83,8 @@ class Login extends React.Component {
             this.setState({
                 email: '',
                 password: '',
+            }, () => {
+                this.props.history.push('/')
             });
 
 

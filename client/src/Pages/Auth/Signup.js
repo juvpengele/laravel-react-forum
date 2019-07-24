@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import config from '../../Services/Config';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 class SignUp extends React.Component {
     constructor(props) {
@@ -67,7 +68,11 @@ class SignUp extends React.Component {
 
 
     _loginAuth(authInfos) {
-        this.props.dispatch({type: "LOGIN", value: authInfos})
+        this.props.dispatch({type: "LOGIN", value: authInfos});
+        this.props.dispatch({type: "SHOW_FLASH", value: {
+                message: 'You are signed up successfully',
+            }
+        })
     }
 
     /**
@@ -108,7 +113,7 @@ class SignUp extends React.Component {
                     show: true,
                     message: 'You are registered successfully !'
                 }
-            });
+            }, () => this.props.history.push('/'));
 
         })
         .catch(error =>{
@@ -194,4 +199,4 @@ class SignUp extends React.Component {
 const mapStateToProps = (state) => {
     return { auth: state.auth }
 };
-export default connect(mapStateToProps)(SignUp);
+export default connect(mapStateToProps)(withRouter(SignUp));
