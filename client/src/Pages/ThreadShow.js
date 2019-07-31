@@ -20,6 +20,7 @@ class ThreadShow extends React.Component{
         };
 
         this._addReply = this._addReply.bind(this);
+        this._deleteReply = this._deleteReply.bind(this);
     }
 
     componentDidMount() {
@@ -63,6 +64,16 @@ class ThreadShow extends React.Component{
         })
     }
 
+    _deleteReply(removedReply) {
+        const replies = this.state.replies.filter(reply => reply.id !== removedReply.id);
+        this.setState((prevState) => {
+            return {
+                replies,
+                thread: {...prevState.thread, replies_count: prevState.thread.replies_count - 1 }
+            }
+        });
+    }
+
     render() {
         return (
 
@@ -70,7 +81,7 @@ class ThreadShow extends React.Component{
                 { this.state.loading && <Loader show={true}/>}
                 <ThreadCard thread={this.state.thread} />
 
-                { this.state.thread && <Replies replies={this.state.replies}/> }
+                { this.state.thread && <Replies replies={this.state.replies} auth={this.props.auth} onDelete={this._deleteReply}/> }
 
                 {
                     this.props.auth.loggedIn &&
