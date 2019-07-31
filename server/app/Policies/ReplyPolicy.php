@@ -55,7 +55,7 @@ class ReplyPolicy
      */
     public function update(User $user, Reply $reply)
     {
-        //
+        return (int) $user->id === (int) $reply->user_id;
     }
 
     /**

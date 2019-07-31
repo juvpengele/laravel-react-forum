@@ -109,4 +109,20 @@ class CreateReplyTest extends TestCase
         $this->assertEquals('Hello world', $reply->fresh()->content);
     }
 
+    /** @test */
+    public function a_reply_can_be_updated_only_by_the_owner()
+    {
+        $john = create(User::class, ['name' => 'John Doe']);
+        $johnToken = auth()->tokenById($john->id);
+
+        $reply = create(Reply::class, ['content' => 'Lorem']);
+
+        $endpoint = "/api/replies/{$reply->id}?token={$johnToken}";
+
+        $this->putJson($endpoint, ['content' => 'Hello world'])
+            ->assertStatus(403);
+
+    }
+
+
 }
