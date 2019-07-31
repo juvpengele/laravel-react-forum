@@ -32,6 +32,13 @@ class RepliesController extends Controller
         return new ReplyResource($reply);
     }
 
+    public function update(Reply $reply)
+    {
+
+        $reply->update(['content' => request('content')]);
+
+        return new ReplyResource($reply);
+    }
 
     public function delete(Reply $reply)
     {

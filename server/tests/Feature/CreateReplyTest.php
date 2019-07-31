@@ -92,11 +92,11 @@ class CreateReplyTest extends TestCase
         $this->assertCount(0, Reply::all());
     }
 
+    /** @test */
     public function a_reply_can_be_updated()
     {
-        $this->withoutExceptionHandling();
 
-        $john = create(User::class);
+        $john = create(User::class, ['name' => 'John Doe']);
         $johnToken = auth()->tokenById($john->id);
 
         $reply = create(Reply::class, ['user_id' => $john->id, 'content' => 'Lorem']);

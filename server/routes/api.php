@@ -33,6 +33,7 @@ Route::group(["middleware" => "cors"], function () {
     //Replies
     Route::post('/replies', 'RepliesController@store')->name('api.replies.store');
     Route::delete('/replies/{reply}', 'RepliesController@delete')->name('api.replies.delete');
+    Route::put('/replies/{reply}', 'RepliesController@update')->name('api.replies.update');
 
     //Authentication
     Route::post('register', 'AuthController@register')->name('api.auth.register');
