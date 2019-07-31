@@ -31,4 +31,14 @@ class RepliesController extends Controller
 
         return new ReplyResource($reply);
     }
+
+
+    public function delete(Reply $reply)
+    {
+        $this->authorize('delete', $reply);
+
+        $reply->delete();
+
+        return response()->json([], 204);
+    }
 }
