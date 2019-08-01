@@ -9,9 +9,7 @@ const Reply = ({ reply, auth, onDelete }) => {
         onDelete(reply);
 
         const endpoint = `${config.remoteBaseUrl}/replies/${reply.id}?token=${auth.token}`;
-        axios.delete(endpoint)
-            .then(response => console.log(response))
-            .catch(error => console.log(error));
+        axios.delete(endpoint);
     };
 
     return (

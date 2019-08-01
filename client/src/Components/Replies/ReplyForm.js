@@ -5,9 +5,11 @@ import config from '../../Services/Config';
 
 function ReplyForm(props) {
     const [content, setContent] = useState('');
+    const [loading, setLoading] = useState(false);
 
     function saveReply(event) {
         event.preventDefault();
+        setLoading(true);
 
         const endpoint = `${config.remoteBaseUrl}/replies?token=${props.auth.token}`;
         const attributes = {
@@ -19,7 +21,8 @@ function ReplyForm(props) {
                 props.addReply(reply.data);
                 setContent('');
             })
-            .catch(error => console.log(error));
+            .catch(error => console.log(error))
+            .finally(() => setLoading(false));
 
     }
 
@@ -29,7 +32,9 @@ function ReplyForm(props) {
                 onChange={(event) => setContent(event.target.value)}
                 value={content}
             />
-            <button className="btn btn-info mb-3" type="submit">Reply</button>
+            <button className="btn btn-info mb-3" type="submit">
+                { loading ? 'Submitting...' : 'Reply'}
+            </button>
         </form>
     )
 }

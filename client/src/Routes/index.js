@@ -12,6 +12,7 @@ import ThreadLayoutRoutes from './ThreadLayoutRoutes';
 import SignUp from "../Pages/Auth/Signup";
 import Login from "../Pages/Auth/Login";
 import Flash from "../Components/Utils/Flash";
+import RequireAuth from "../Components/AuthMiddleware/RequireAuth";
 
 const Routes = () => (
     <Router>
@@ -23,12 +24,13 @@ const Routes = () => (
             <ThreadLayoutRoutes path="/:category/:thread" component={ ThreadShow } name="threads.show" exact/>
             <ThreadLayoutRoutes path="/categories/:category/posts" component={ ThreadsIndex } />
 
-            <AuthLayoutRoutes path="/signup" component={ SignUp } exact />
-            <AuthLayoutRoutes path="/login" component={ Login } exact />
+            <AuthLayoutRoutes path="/signup" component={ SignUp } middleware={ RequireAuth } exact />
+            <AuthLayoutRoutes path="/login" component={ Login } exact middleware={ RequireAuth }/>
         </div>
 
 
         <Footer/>
+
         <Flash/>
 
     </Router>

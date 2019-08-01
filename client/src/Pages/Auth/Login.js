@@ -11,6 +11,7 @@ class Login extends React.Component {
         this.state = {
             email: '',
             password: '',
+            loading: false,
             errors: {
                 email: [],
                 password: [],
@@ -61,7 +62,8 @@ class Login extends React.Component {
             errors:  {
                 email: [],
                 password: [],
-            }
+            },
+            loading: true
         });
 
         axios.post(endpoint, data, {
@@ -97,46 +99,50 @@ class Login extends React.Component {
                     }
                 });
             }
-        });
+        })
+        .finally(() => this.setState({ loading: false}))
     }
 
     render() {
+        const { Middleware : AuthMiddlware } =  this.props;
         return (
-            <div className="row my-4">
-                <form className="col-md-6 row mx-auto mt-2" onSubmit={(event) => this.handleFormSubmit(event)} method="POST">
-                    <h2 className="text-center col-md-12 mt-2">Login</h2>
+            <AuthMiddlware>
+                <div className="row my-4">
+                    <form className="col-md-6 row mx-auto mt-2" onSubmit={(event) => this.handleFormSubmit(event)} method="POST">
+                        <h2 className="text-center col-md-12 mt-2">Login</h2>
 
-                    <div className="form-group col-md-12">
-                        <label htmlFor="exampleInputEmail1">Email address</label>
-                        <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                               placeholder="Enter email" onChange={(event) => this.handleEmailChange(event)} value={this.state.email} />
-                        { this.state.errors['email'][0] &&
-                        <small id="emailHelp" className="form-text text-danger">
-                            { this.state.errors['email'][0] }
-                        </small>
-                        }
-                    </div>
-                    <div className="form-group col-md-12">
-                        <label htmlFor="password">Password</label>
-                        <input type="password" className="form-control" id="password" placeholder="Enter your password"
-                               value={this.state.password} onChange={ (event) => this.handlePasswordChange(event) }
-                        />
-                        { this.state.errors['password'][0] &&
-                        <small id="emailHelp" className="form-text text-danger">
-                            { this.state.errors['password'][0] }
-                        </small>
-                        }
-                    </div>
+                        <div className="form-group col-md-12">
+                            <label htmlFor="exampleInputEmail1">Email address</label>
+                            <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                                   placeholder="Enter email" onChange={(event) => this.handleEmailChange(event)} value={this.state.email} />
+                            { this.state.errors['email'][0] &&
+                            <small id="emailHelp" className="form-text text-danger">
+                                { this.state.errors['email'][0] }
+                            </small>
+                            }
+                        </div>
+                        <div className="form-group col-md-12">
+                            <label htmlFor="password">Password</label>
+                            <input type="password" className="form-control" id="password" placeholder="Enter your password"
+                                   value={this.state.password} onChange={ (event) => this.handlePasswordChange(event) }
+                            />
+                            { this.state.errors['password'][0] &&
+                            <small id="emailHelp" className="form-text text-danger">
+                                { this.state.errors['password'][0] }
+                            </small>
+                            }
+                        </div>
 
-                    <div className="col-md-12">
-                        <button type="submit" className="btn btn-outline-info btn-lg">Login</button>
-                    </div>
-                </form>
-
-            </div>
+                        <div className="col-md-12">
+                            <button type="submit" className="btn btn-outline-info btn-lg">
+                                { this.state.loading ? 'Submitting...' : 'Login'}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </AuthMiddlware>
         )
     }
-
 }
 
 const mapStateToProps = (state) => {
