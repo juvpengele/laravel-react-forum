@@ -21,6 +21,7 @@ class ThreadShow extends React.Component{
 
         this._addReply = this._addReply.bind(this);
         this._deleteReply = this._deleteReply.bind(this);
+        this._editReply = this._editReply.bind(this);
     }
 
     componentDidMount() {
@@ -74,6 +75,18 @@ class ThreadShow extends React.Component{
         });
     }
 
+    _editReply(content, newReply) {
+        const replies = this.state.replies.map(reply => {
+            if(reply.id == newReply.id) {
+                reply.content = content;
+            }
+            return reply;
+        });
+
+        //Ajax request
+
+        this.setState({ replies });
+    }
     render() {
         return (
 
@@ -81,7 +94,9 @@ class ThreadShow extends React.Component{
                 { this.state.loading && <Loader show={true}/>}
                 <ThreadCard thread={this.state.thread} />
 
-                { this.state.thread && <Replies replies={this.state.replies} auth={this.props.auth} onDelete={this._deleteReply}/> }
+                { this.state.thread && <Replies replies={this.state.replies} auth={this.props.auth} onDelete={this._deleteReply}
+                    onEdit={this._editReply}
+                /> }
 
                 {
                     this.props.auth.loggedIn &&
