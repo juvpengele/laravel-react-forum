@@ -15,6 +15,14 @@ const Reply = ({ reply, auth, onDelete, onEdit }) => {
         axios.delete(endpoint);
     };
 
+    function saveEditingReply() {
+        onEdit(content, reply);
+        setEditing(false);
+
+        const endpoint = `${config.remoteBaseUrl}/replies/${reply.id}?token=${auth.token}`;
+        axios.put(endpoint, {content});
+    }
+
     function handleEditingChange() {
         setEditing(true);
         setContent(reply.content);
@@ -24,13 +32,7 @@ const Reply = ({ reply, auth, onDelete, onEdit }) => {
         setContent(event.target.value)
     }
 
-    function saveEditingReply() {
-        onEdit(content, reply);
-        setEditing(false);
-    }
-
-
-    function editingButton() {
+    function showEditingButton() {
         if(editing) {
             return (
                 <button className="mr-2 btn btn-warning text-white" style={{ cursor: 'pointer'}}
@@ -86,7 +88,7 @@ const Reply = ({ reply, auth, onDelete, onEdit }) => {
             {
                 auth.id == reply.user_id &&
                 <div className="card-footer  d-flex justify-content-between">
-                    { editingButton() }
+                    { showEditingButton() }
                     <button className="btn btn-danger" onClick={deleteReply} style={{ cursor: 'pointer'}} >
                         <i className="fa fa-trash-o"/>
                     </button>
