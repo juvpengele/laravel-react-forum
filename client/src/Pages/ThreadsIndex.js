@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import Config from "../Services/Config";
+import { connect } from 'react-redux';
 
 //Components
 import ThreadDescription from "../Components/Threads/ThreadDescription";
@@ -44,14 +45,15 @@ class ThreadsIndex extends React.Component
      */
     _getEndpoint({ pathname}) {
         let endpoint = Config.remoteBaseUrl;
+        let token = this.props.auth.loggedIn ? `token=${this.props.auth.token}` : '';
 
         if(pathname) {
             if(pathname === '/') {
-                return  `${endpoint}/threads`;
+                return  `${endpoint}/threads?${token}`;
             }
-            return endpoint + pathname
+            return endpoint + pathname + `?${token}`
         }
-        return  `${endpoint}/threads`;
+        return  `${endpoint}/threads?${token}`;
     }
 
     /**
@@ -79,7 +81,8 @@ class ThreadsIndex extends React.Component
      * @param page
      */
     changePage = (page) => {
-        let endpoint = this.state.endpoint + `?page=${page}`;
+        let token = this.props.auth.loggedIn ? `token=${this.props.auth.token}` : '';
+        let endpoint = this.state.endpoint + `?page=${page}&${token}`;
 
         this._loadThreads(endpoint);
 
@@ -90,11 +93,35 @@ class ThreadsIndex extends React.Component
         });
     };
 
+    likeThread = (likedThread) => {
+
+        const newThreads = this.state.threads.data.map((thread) => {
+            if(thread.id === likedThread.id) {
+                const actualLikesCount = parseInt(likedThread.likes_count);
+                const likes_count = likedThread.is_liked ? actualLikesCount - 1 : actualLikesCount + 1;
+
+                thread.is_liked = ! thread.is_liked;
+                thread.likes_count = likes_count;
+            }
+            return thread
+        });
+
+        this.setState(prevState => ({
+            threads: {
+                data: newThreads,
+                meta: prevState.threads.meta
+            }
+        }))
+
+    };
+
 
     render() {
         return (
             <div className="row">
-                <ThreadDescription threads={this.state.threads.data}/>
+                <ThreadDescription threads={this.state.threads.data}
+                    onLike={this.likeThread}
+                />
                 <div className="col-md-12">
                     <Paginator meta={this.state.threads.meta}  changePage={this.changePage} />
                 </div>
@@ -104,4 +131,10 @@ class ThreadsIndex extends React.Component
 
 }
 
-export default ThreadsIndex;
+const mapStateToProps = (state) => {
+    return {
+        auth: state.auth
+    }
+};
+
+export default connect(mapStateToProps)(ThreadsIndex);

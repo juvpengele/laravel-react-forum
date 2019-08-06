@@ -65,12 +65,13 @@ class Thread extends Model
     }
 
     /**
-     * Polymorph relationship between a thread and likes
+     * Polymorphic relationship between a thread and likes
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function likes()
     {
         return $this->morphMany(Like::class, 'likeable');
     }
+
 
 }

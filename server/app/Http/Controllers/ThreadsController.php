@@ -31,8 +31,8 @@ class ThreadsController extends Controller
         }
 
         $threads = $threads->withCount(["replies", "likes"])
-            ->latest()
-            ->paginate(10, ["title", "visits_count", "slug", "created_at", "user_id", "category_id"]);
+                            ->latest()
+                            ->paginate(10);
 
         return new ThreadCollection($threads);
     }

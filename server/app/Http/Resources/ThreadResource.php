@@ -26,7 +26,8 @@ class ThreadResource extends JsonResource
             "ago"           => $this->ago,
             "replies"   => $this->replies,
             "replies_count" => $this->replies()->count(),
-            "likes_count" => $this->likes()->count()
+            "likes_count" => $this->likes()->count(),
+            "is_liked"       => $this->likes()->where(['user_id' => auth()->id() ])->count() > 0,
         ];
     }
 }

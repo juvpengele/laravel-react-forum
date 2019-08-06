@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Thread;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -101,7 +102,8 @@ class AuthController extends Controller
                 'access_token' => $token,
                 'token_type' => 'bearer',
                 'expires_in' => auth()->factory()->getTTL() * 6000000,
-                'auth_id'         => auth()->id()
+                'auth_id'         => auth()->id(),
+                'liked_threads' => auth()->user()->likes()->where(['likeable_type' => Thread::class])->get(['id'])
             ]
         ]);
     }

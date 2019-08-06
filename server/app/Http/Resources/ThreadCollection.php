@@ -6,6 +6,8 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class ThreadCollection extends ResourceCollection
 {
+
+    public $collects = ThreadResource::class;
     /**
      * Transform the resource collection into an array.
      *
