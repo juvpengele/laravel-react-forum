@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Like;
 use App\Models\Reply;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -68,5 +69,10 @@ class User extends Authenticatable implements JWTSubject
     public function replies()
     {
         return $this->hasMany(Reply::class, 'user_id');
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
     }
 }

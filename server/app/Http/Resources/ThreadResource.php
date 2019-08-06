@@ -25,7 +25,8 @@ class ThreadResource extends JsonResource
             "visits_count"  => $this->visits_count,
             "ago"           => $this->ago,
             "replies"   => $this->replies,
-            "replies_count" => $this->replies()->count()
+            "replies_count" => $this->replies()->count(),
+            "likes_count" => $this->likes()->count()
         ];
     }
 }

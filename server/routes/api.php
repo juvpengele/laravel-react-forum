@@ -24,6 +24,10 @@ Route::group(["middleware" => "cors"], function () {
         "update"    => "api.threads.update",
         "destroy"   => "api.threads.destroy"
     ])->except("show");
+
+    Route::post("/{category}/{thread}/likes", "LikeThreadsController@store")->name("api.threads.likes.store");
+    Route::delete("/{category}/{thread}/likes", "LikeThreadsController@destroy")->name("api.threads.likes.destroy");
+
     Route::get("{category}/{thread}", "ThreadsController@show")->name("api.threads.show");
     Route::get('/categories/{category}/posts', 'ThreadsController@index')->name('api.categories.posts');
 

@@ -83,7 +83,6 @@ const Reply = ({ reply, auth, onDelete, onEdit }) => {
                 </div>
                 <hr/>
                 { showContent() }
-
             </div>
             {
                 auth.id == reply.user_id &&

@@ -18,10 +18,9 @@ const _showThreads = function (threads) {
                     <div>
                         { thread.creator.name } said:
                     </div>
-                    <small className="text-secondary">
-                        <i className="fa fa-clock-o"/>
-                        { thread.ago }
-                    </small>
+                    <button className="btn">
+                        <i className="fa fa-heart" /> { thread.likes_count }
+                    </button>
                 </div>
                 <div className="card-body">
                     <Link to={ `/${thread.category.slug}/${thread.slug }` }>
@@ -38,10 +37,15 @@ const _showThreads = function (threads) {
                         </span>
                     </div>
                 </div>
-                <div className="card-footer">
-                    <Link className="btn btn-info rounded-pill" href="#"
+                <div className="card-footer d-flex justify-content-between align-items-center">
+                    <Link className="btn btn-info rounded-pill"
                         to={`/categories/${thread.category.slug}/posts`}
                     >{ thread.category.name }</Link>
+
+                    <small className="text-secondary">
+                        <i className="fa fa-clock-o"/>
+                        { thread.ago }
+                    </small>
                 </div>
             </div>
         ))

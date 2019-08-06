@@ -30,7 +30,7 @@ class ThreadsController extends Controller
             $threads->search($searchedTerm);
         }
 
-        $threads = $threads->withCount("replies")
+        $threads = $threads->withCount(["replies", "likes"])
             ->latest()
             ->paginate(10, ["title", "visits_count", "slug", "created_at", "user_id", "category_id"]);
 
