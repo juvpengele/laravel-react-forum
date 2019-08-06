@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Models\Like;
 use App\Models\Reply;
 use App\User;
 use Tests\TestCase;
@@ -19,5 +20,14 @@ class ReplyTest extends TestCase
         $reply = create(Reply::class, ["user_id" => $john->id]);
 
         $this->assertEquals($john->id, $reply->creator->id);
+    }
+
+    /** @test */
+    public function a_reply_can_liked()
+    {
+        $thread = create(Reply::class);
+        create(Like::class, ['likeable_id' => $thread->id, 'likeable_type' => Reply::class]);
+
+        $this->assertEquals(1, $thread->likes->count());
     }
 }

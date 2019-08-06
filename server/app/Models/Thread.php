@@ -64,5 +64,13 @@ class Thread extends Model
         return $query->where('title', "LIKE", "%{$term}%");
     }
 
+    /**
+     * Polymorph relationship between a thread and likes
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function likes()
+    {
+        return $this->morphMany(Like::class, 'likeable');
+    }
 
 }

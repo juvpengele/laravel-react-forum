@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Models\Category;
+use App\Models\Like;
 use App\Models\Reply;
 use App\Models\Thread;
 use App\User;
@@ -56,6 +57,14 @@ class ThreadTest extends TestCase
         create(Thread::class, [], 5);
 
         $this->assertCount(1, Thread::search('dummy')->get());
+    }
 
+    /** @test */
+    public function a_thread_can_be_liked()
+    {
+        $thread = create(Thread::class);
+        create(Like::class, ['likeable_id' => $thread->id, 'likeable_type' => Thread::class]);
+
+        $this->assertEquals(1, $thread->likes->count());
     }
 }
