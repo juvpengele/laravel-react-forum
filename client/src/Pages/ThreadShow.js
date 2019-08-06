@@ -22,6 +22,7 @@ class ThreadShow extends React.Component{
         this._addReply = this._addReply.bind(this);
         this._deleteReply = this._deleteReply.bind(this);
         this._editReply = this._editReply.bind(this);
+        this.likeThread = this.likeThread.bind(this);
     }
 
     componentDidMount() {
@@ -44,7 +45,9 @@ class ThreadShow extends React.Component{
     }
 
     _loadThread(endpoint) {
-        axios.get(endpoint)
+        const url =  this.props.auth.loggedIn ? `${endpoint}?token=${this.props.auth.token}` : endpoint;
+
+        axios.get(url)
             .then(({data: thread}) => {
                 this.setState({
                     thread: thread.data,
@@ -83,16 +86,31 @@ class ThreadShow extends React.Component{
             return reply;
         });
 
-        //Ajax request
-
         this.setState({ replies });
     }
+
+    likeThread(thread) {
+        const actualLikesCount = parseInt(thread.likes_count);
+        const likes_count = thread.is_liked ? actualLikesCount - 1 : actualLikesCount + 1;
+        const is_liked = ! thread.is_liked;
+
+        this.setState(prevState => {
+            return {
+                thread: {...prevState.thread, likes_count, is_liked }
+            }
+        })
+
+    }
+
     render() {
         return (
-
-            <div className="col-md-12">
+            <>
                 { this.state.loading && <Loader show={true}/>}
-                <ThreadCard thread={this.state.thread} />
+                <ThreadCard
+                    thread={this.state.thread}
+                    onLike={this.likeThread}
+                    auth={this.props.auth}
+                />
 
                 { this.state.thread && <Replies replies={this.state.replies} auth={this.props.auth} onDelete={this._deleteReply}
                     onEdit={this._editReply}
@@ -103,7 +121,7 @@ class ThreadShow extends React.Component{
                     this.state.thread &&
                     <ReplyForm threadId={this.state.thread.id} addReply={this._addReply}/>
                 }
-            </div>
+            </>
         )
     }
 }

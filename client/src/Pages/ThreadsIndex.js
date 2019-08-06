@@ -2,9 +2,10 @@ import React from "react";
 import axios from "axios";
 import Config from "../Services/Config";
 import { connect } from 'react-redux';
+import ThreadCard from '../Components/Threads/ThreadCard';
+import Loader from '../Components/Utils/Loader';
 
 //Components
-import ThreadDescription from "../Components/Threads/ThreadDescription";
 import Paginator from "../Components/Paginator/Pagination";
 
 
@@ -117,13 +118,24 @@ class ThreadsIndex extends React.Component
 
 
     render() {
+        const { threads } = this.state;
+
         return (
             <div className="row">
-                <ThreadDescription threads={this.state.threads.data}
-                    onLike={this.likeThread}
-                />
                 <div className="col-md-12">
-                    <Paginator meta={this.state.threads.meta}  changePage={this.changePage} />
+                    { threads.data.length === 0 && <Loader show={true}/> }
+                    {
+                        threads.data.map(thread => (
+                            <ThreadCard
+                                thread={thread}  onLike={this.likeThread}
+                                auth={this.props.auth}  key={thread.id}
+                            />)
+                        )
+                    }
+                </div>
+
+                <div className="col-md-12">
+                    <Paginator meta={threads.meta}  changePage={this.changePage} />
                 </div>
             </div>
         );

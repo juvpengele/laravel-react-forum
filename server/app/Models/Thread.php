@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
+use App\Traits\Favoritable;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
 {
+    use Favoritable;
+
     public $with = ["category", "creator"];
-    public $appends = ['ago'];
+    public $appends = ['ago', 'is_liked'];
+
 
     /**
      * Relation between a thread and the creator
@@ -41,7 +45,7 @@ class Thread extends Model
      * The key name for model binding route
      * @return string
      */
-    public function getRouteKeyName()
+    public function getRouteKeyName() : string
     {
         return 'slug';
     }
@@ -49,7 +53,7 @@ class Thread extends Model
     /**
      * @return string
      */
-    public function getDescriptionAttribute()
+    public function getDescriptionAttribute() : string
     {
         return substr($this->content, 0, 50). "...";
     }
@@ -63,15 +67,5 @@ class Thread extends Model
     {
         return $query->where('title', "LIKE", "%{$term}%");
     }
-
-    /**
-     * Polymorphic relationship between a thread and likes
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
-     */
-    public function likes()
-    {
-        return $this->morphMany(Like::class, 'likeable');
-    }
-
 
 }
