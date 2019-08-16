@@ -24,7 +24,7 @@ class ThreadResource extends JsonResource
             "category" => $this->category,
             "visits_count"  => $this->visits_count,
             "ago"           => $this->ago,
-            "replies"   => $this->replies,
+            "replies"   => ReplyResource::collection($this->replies),
             "replies_count" => $this->replies()->count(),
             "likes_count" => $this->likes()->count(),
             "is_liked"  => $this->is_liked

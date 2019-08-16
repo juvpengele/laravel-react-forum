@@ -21,7 +21,8 @@ class ReplyResource extends JsonResource
             'creator'   => $this->creator,
             'ago'       => $this->ago,
             'user_id'   => $this->creator->id,
-            'likes_count' => $this->likes()->count()
+            'likes_count' => $this->likes()->count(),
+            'is_liked' => $this->is_liked
         ];
     }
 }

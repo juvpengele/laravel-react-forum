@@ -124,5 +124,18 @@ class CreateReplyTest extends TestCase
 
     }
 
+    /** @test */
+    public function we_can_fetch_replies_from_a_particular_thread()
+    {
+        $this->withoutExceptionHandling();
 
+        $thread = create(Thread::class);
+        create(Reply::class, ['thread_id' => $thread->id], 10);
+
+        $endpoint = "/api/{$thread->category->slug}/{$thread->slug}/replies";
+
+        $response = $this->getJson($endpoint)->json();
+
+        $this->assertCount(10, $response['data']);
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ReplyResource;
 use App\Models\Reply;
+use App\Models\Thread;
 use Illuminate\Http\Request;
 use JWTAuth;
 
@@ -12,8 +13,16 @@ class RepliesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['jwt']);
+        $this->middleware(['jwt'])->except(['index']);
     }
+
+    public function index($categorySlug, Thread $thread)
+    {
+        $replies = $thread->replies()->get();
+
+        return ReplyResource::collection($replies);
+    }
+
 
     public function store()
     {

@@ -112,9 +112,15 @@ class ThreadShow extends React.Component{
                     auth={this.props.auth}
                 />
 
-                { this.state.thread && <Replies replies={this.state.replies} auth={this.props.auth} onDelete={this._deleteReply}
-                    onEdit={this._editReply}
-                /> }
+                {
+                    this.state.thread &&
+                    <Replies
+                        replies={this.state.replies}
+                        auth={this.props.auth}
+                        onDelete={this._deleteReply}
+                        onEdit={this._editReply}
+                    />
+                }
 
                 {
                     this.props.auth.loggedIn &&

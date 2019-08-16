@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import config from '../../Services/Config';
 import axios from 'axios';
+import LikeReplyButton from "./LikeReplyButton";
 
 
 const Reply = ({ reply, auth, onDelete, onEdit }) => {
@@ -35,7 +36,7 @@ const Reply = ({ reply, auth, onDelete, onEdit }) => {
     function showEditingButton() {
         if(editing) {
             return (
-                <button className="mr-2 btn btn-warning text-white" style={{ cursor: 'pointer'}}
+                <button className="mr-2 btn btn-warning text-white" style={{ cursor: 'pointer' }}
                     onClick={ () => setEditing(false) }
                 >
                     <i className="fa fa-ban"/> Cancel
@@ -72,14 +73,20 @@ const Reply = ({ reply, auth, onDelete, onEdit }) => {
         )
     }
 
-
     return (
         <div className="card  mb-3">
             <div className="card-body">
-                <div>
+                <div className="d-flex justify-content-between align-items-center">
                     <h5>
                         {reply.creator.name}
                     </h5>
+                    <LikeReplyButton
+                        isLiked={reply.is_lked}
+                        likesCount={reply.likes_count}
+                        replyId={reply.id}
+                        auth={auth}
+
+                    />
                 </div>
                 <hr/>
                 { showContent() }
