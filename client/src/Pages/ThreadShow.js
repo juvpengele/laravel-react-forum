@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import ThreadCard from "../Components/Threads/ThreadCard";
 import Loader from "../Components/Utils/Loader";
 import Replies from "../Components/Replies/Replies";
-import ReplyForm from '../Components/Replies/ReplyForm'
 
 class ThreadShow extends React.Component{
     constructor(props) {
@@ -15,19 +14,17 @@ class ThreadShow extends React.Component{
 
         this.state = {
             thread: null,
-            replies: [],
             loading: true,
         };
 
-        this._addReply = this._addReply.bind(this);
-        this._deleteReply = this._deleteReply.bind(this);
-        this._editReply = this._editReply.bind(this);
         this.likeThread = this.likeThread.bind(this);
+        this.addRepliesCount = this.addRepliesCount.bind(this);
+        this.removeRepliesCount = this.removeRepliesCount.bind(this);
     }
 
     componentDidMount() {
-        const { category, thread } = this.props.match.params;
 
+        const { category, thread } = this.props.match.params;
         let endpoint =  `${config.remoteBaseUrl}/${category}/${thread}`;
 
         this._loadThread(endpoint);
@@ -46,48 +43,33 @@ class ThreadShow extends React.Component{
 
     _loadThread(endpoint) {
         const url =  this.props.auth.loggedIn ? `${endpoint}?token=${this.props.auth.token}` : endpoint;
-
         axios.get(url)
-            .then(({data: thread}) => {
-                this.setState({
-                    thread: thread.data,
-                    replies: thread.data.replies,
-                    loading: false
-                });
-                document.title = `${this.state.thread.title} | Forum`
+            .then(({ data : thread}) => {
+                const { data } = thread;
+
+                this.setState({ thread: data, loading: false },
+                    () => document.title = this.state.thread.title + " | Forum")
             })
-            .catch(error => console.log(error));
+            .catch(error => console.log(error.response));
+
     }
 
-    _addReply(reply) {
-        this.setState((prevState) => {
-            return {
-                replies: [...prevState.replies, reply],
-                thread: {...prevState.thread, replies_count: prevState.thread.replies_count + 1 }
+    addRepliesCount() {
+        this.setState(prevState => {
+            return  {
+                thread: {...prevState.thread, replies_count: prevState.replies_count++}
             }
         })
     }
 
-    _deleteReply(removedReply) {
-        const replies = this.state.replies.filter(reply => reply.id !== removedReply.id);
-        this.setState((prevState) => {
-            return {
-                replies,
-                thread: {...prevState.thread, replies_count: prevState.thread.replies_count - 1 }
+    removeRepliesCount() {
+        this.setState(prevState => {
+            return  {
+                thread: {...prevState.thread, replies_count: prevState.replies_count--}
             }
-        });
+        })
     }
 
-    _editReply(content, newReply) {
-        const replies = this.state.replies.map(reply => {
-            if(reply.id == newReply.id) {
-                reply.content = content;
-            }
-            return reply;
-        });
-
-        this.setState({ replies });
-    }
 
     likeThread(thread) {
         const actualLikesCount = parseInt(thread.likes_count);
@@ -115,18 +97,13 @@ class ThreadShow extends React.Component{
                 {
                     this.state.thread &&
                     <Replies
-                        replies={this.state.replies}
                         auth={this.props.auth}
-                        onDelete={this._deleteReply}
-                        onEdit={this._editReply}
+                        thread={this.state.thread}
+                        onNewReply={this.addRepliesCount}
+                        onRemovedReply={this.removeRepliesCount}
                     />
                 }
 
-                {
-                    this.props.auth.loggedIn &&
-                    this.state.thread &&
-                    <ReplyForm threadId={this.state.thread.id} addReply={this._addReply}/>
-                }
             </>
         )
     }

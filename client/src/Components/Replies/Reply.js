@@ -4,7 +4,7 @@ import axios from 'axios';
 import LikeReplyButton from "./LikeReplyButton";
 
 
-const Reply = ({ reply, auth, onDelete, onEdit }) => {
+const Reply = ({ reply, auth, onDelete, onEdit, onLike }) => {
     const [editing, setEditing] = useState(false);
     const [content, setContent] = useState('');
 
@@ -73,6 +73,7 @@ const Reply = ({ reply, auth, onDelete, onEdit }) => {
         )
     }
 
+
     return (
         <div className="card  mb-3">
             <div className="card-body">
@@ -81,11 +82,9 @@ const Reply = ({ reply, auth, onDelete, onEdit }) => {
                         {reply.creator.name}
                     </h5>
                     <LikeReplyButton
-                        isLiked={reply.is_lked}
-                        likesCount={reply.likes_count}
-                        replyId={reply.id}
+                        reply={reply}
                         auth={auth}
-
+                        onLike={onLike}
                     />
                 </div>
                 <hr/>

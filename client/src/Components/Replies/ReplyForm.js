@@ -8,6 +8,7 @@ function ReplyForm(props) {
     const [loading, setLoading] = useState(false);
 
     function saveReply(event) {
+
         event.preventDefault();
         setLoading(true);
 
@@ -16,6 +17,7 @@ function ReplyForm(props) {
             content,
             'thread_id' : props.threadId
         };
+
         axios.post(endpoint, attributes)
             .then(({data : reply}) => {
                 props.addReply(reply.data);
