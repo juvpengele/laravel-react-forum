@@ -22,6 +22,9 @@ trait Favoritable
      */
     public function getIsLikedAttribute() : bool
     {
-        return $this->likes()->where([ 'user_id' => auth()->id() ])->count() > 0;
+        if(auth()->check()) {
+            return $this->likes()->where([ 'user_id' => auth()->id() ])->count() > 0;
+        }
+        return false;
     }
 }

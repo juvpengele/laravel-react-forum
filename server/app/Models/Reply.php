@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\Favoritable;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Reply extends Model
 {
+    use Favoritable;
+
     public $with = ["creator"];
     public $appends = ["ago"];
     protected $fillable = ['user_id', 'thread_id', 'content'];
@@ -21,8 +24,5 @@ class Reply extends Model
         return $this->created_at->diffForHumans();
     }
 
-    public function likes()
-    {
-        return $this->morphMany(Like::class, 'likeable');
-    }
+
 }

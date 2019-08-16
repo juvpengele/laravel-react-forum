@@ -66,6 +66,11 @@ class User extends Authenticatable implements JWTSubject
         $this->attributes['password'] = bcrypt($password);
     }
 
+    public static function token($userId)
+    {
+        return auth()->tokenById($userId);
+    }
+
     public function replies()
     {
         return $this->hasMany(Reply::class, 'user_id');
@@ -74,5 +79,21 @@ class User extends Authenticatable implements JWTSubject
     public function likes()
     {
         return $this->hasMany(Like::class);
+    }
+
+    public function like($model)
+    {
+        return $this->likes()->create([
+            'likeable_id' => $model->id,
+            'likeable_type' => get_class($model)
+        ]);
+    }
+
+    public function unlike($model)
+    {
+        $this->likes()->where([
+            'likeable_id' => $model->id,
+            'likeable_type' => get_class($model)
+        ])->delete();
     }
 }

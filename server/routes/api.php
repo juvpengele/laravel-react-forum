@@ -25,9 +25,6 @@ Route::group(["middleware" => "cors"], function () {
         "destroy"   => "api.threads.destroy"
     ])->except("show");
 
-    Route::post("/{category}/{thread}/likes", "LikeThreadsController@store")->name("api.threads.likes.store");
-    Route::delete("/{category}/{thread}/likes", "LikeThreadsController@destroy")->name("api.threads.likes.destroy");
-
     Route::get("{category}/{thread}", "ThreadsController@show")->name("api.threads.show");
     Route::get('/categories/{category}/posts', 'ThreadsController@index')->name('api.categories.posts');
 
@@ -38,6 +35,17 @@ Route::group(["middleware" => "cors"], function () {
     Route::post('/replies', 'RepliesController@store')->name('api.replies.store');
     Route::delete('/replies/{reply}', 'RepliesController@delete')->name('api.replies.delete');
     Route::put('/replies/{reply}', 'RepliesController@update')->name('api.replies.update');
+
+
+    // Likes
+
+    Route::post('/replies/{reply}/likes', 'LikeRepliesController@store')->name('api.replies.likes.store');
+    Route::delete('/replies/{reply}/likes', 'LikeRepliesController@destroy')->name('api.replies.likes.destroy');
+
+    Route::post("/{category}/{thread}/likes", "LikeThreadsController@store")->name("api.threads.likes.store");
+    Route::delete("/{category}/{thread}/likes", "LikeThreadsController@destroy")->name("api.threads.likes.destroy");
+
+
 
     //Authentication
     Route::post('register', 'AuthController@register')->name('api.auth.register');

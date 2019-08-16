@@ -12,11 +12,8 @@ class LikeThreadsController extends Controller
 {
     public function store(Category $category, Thread $thread)
     {
-
-        if(! auth()->user()->likes()->where($this->attributes($thread))->count() > 0) {
-            auth()->user()->likes()->create(
-                $this->attributes($thread)
-            );
+        if(! $thread->isLiked) {
+            auth()->user()->like($thread);
         }
 
         return response()->json(['data' => [
@@ -26,28 +23,11 @@ class LikeThreadsController extends Controller
 
     public function destroy(Category $category, Thread $thread)
     {
-        auth()->user()
-              ->likes()
-              ->where(
-                  $this->attributes($thread)
-              )
-              ->delete();
+        auth()->user()->unlike($thread);
 
         return response()->json(['data' => [
             'likes_count' => $thread->likes->count()
         ]]);
     }
 
-    /**
-     * Get the attributes for a likeable thread
-     * @param $thread
-     * @return array
-     */
-    protected function attributes($thread)
-    {
-        return [
-            'likeable_id' => $thread->id,
-            'likeable_type' => Thread::class
-        ];
-    }
 }
