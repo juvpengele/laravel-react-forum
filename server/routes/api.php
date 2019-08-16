@@ -38,6 +38,8 @@ Route::group(["middleware" => "cors"], function () {
 
     Route::get("/{category}/{thread}", "ThreadsController@show")->name("api.threads.show");
     Route::get("/{category}/{thread}/replies", "RepliesController@index")->name("api.threads.replies.index");
+    Route::post("/{category}/{thread}/best-replies", "BestRepliesController@store")->name("api.threads.best-replies.store");
+    Route::delete("/{category}/{thread}/best-replies", "BestRepliesController@destroy")->name("api.threads.best-replies.delete");
 
     /**
      * Likes

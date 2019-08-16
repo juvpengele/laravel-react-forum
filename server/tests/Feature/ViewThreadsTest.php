@@ -67,19 +67,6 @@ class ViewThreadsTest extends TestCase
         $this->assertEquals(2, $thread->fresh()->visits_count);
     }
 
-    /** @test */
-    public function when_we_visit_a_single_thread_we_see_all_the_related_replies()
-    {
-        $thread = create(Thread::class);
-
-        create(Reply::class, ["thread_id" => $thread->id], 5);
-
-        $response = $this->getJson(
-                        route("api.threads.show", ["category" => $thread->category, "thread" => $thread])
-                    )->json();
-
-        $this->assertCount(5, $response["data"]["replies"]);
-    }
 
     /** @test */
     public function guest_can_search_posts()

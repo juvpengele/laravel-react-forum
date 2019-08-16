@@ -20,6 +20,7 @@ class CreateThreadsTable extends Migration
             $table->text("content");
             $table->unsignedBigInteger("user_id");
             $table->unsignedBigInteger("category_id");
+            $table->unsignedBigInteger("best_reply_id")->nullable();
             $table->unsignedBigInteger("visits_count");
             $table->timestamps();
 

@@ -138,4 +138,65 @@ class CreateReplyTest extends TestCase
 
         $this->assertCount(10, $response['data']);
     }
+
+    /** @test */
+    public function a_reply_can_be_as_best_by_the_thread_creator()
+    {
+        $john = create(User::class);
+        $token = User::token($john->id);
+
+        $thread = create(Thread::class, ['user_id' => $john->id]);
+        $reply = create(Reply::class,  ['thread_id' => $thread->id]);
+
+        $endpoint = "/api/{$thread->category->slug}/{$thread->slug}/best-replies?token=$token";
+        $this->post($endpoint, ['reply_id' => $reply->id])->assertStatus(200);
+
+        $this->assertEquals($thread->fresh()->best_reply_id, $reply->id);
+    }
+
+    /** @test */
+    public function a_reply_can_be_as_best_only_by_the_thread_creator()
+    {
+        $john = create(User::class);
+        $token = User::token($john->id);
+
+        $thread = create(Thread::class);
+        $reply = create(Reply::class,  ['thread_id' => $thread->id]);
+
+        $endpoint = "/api/{$thread->category->slug}/{$thread->slug}/best-replies?token=$token";
+        $this->post($endpoint, ['reply_id' => $reply->id])->assertStatus(403);
+
+        $this->assertNull($thread->fresh()->best_reply_id);
+    }
+
+    /** @test */
+    public function a_reply_can_be_removed_as_best_by_the_creator()
+    {
+        $john = create(User::class);
+        $token = User::token($john->id);
+
+        $thread = create(Thread::class, ['user_id' => $john->id, 'best_reply_id' => 1]);
+        $reply = create(Reply::class,  ['thread_id' => $thread->id]);
+
+        $endpoint = "/api/{$thread->category->slug}/{$thread->slug}/best-replies?token=$token";
+        $this->delete($endpoint, ['reply_id' => $reply->id])->assertStatus(200);
+
+        $this->assertNull($thread->fresh()->best_reply_id);
+    }
+
+    /** @test */
+    public function a_reply_can_be_removed_as_best_only_by_the_thread_creator()
+    {
+        $john = create(User::class);
+        $token = User::token($john->id);
+
+        $thread = create(Thread::class);
+        $reply = create(Reply::class,  ['thread_id' => $thread->id]);
+
+        $endpoint = "/api/{$thread->category->slug}/{$thread->slug}/best-replies?token=$token";
+        $this->delete($endpoint, ['reply_id' => $reply->id])->assertStatus(403);
+
+        $this->assertNull($thread->fresh()->best_reply_id);
+    }
+
 }
