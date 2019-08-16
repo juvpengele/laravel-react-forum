@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
+import './Animate.css';
 
 function Flash (props) {
+    const {animationClassName, setAnimationClassName} = useState('slideInRight');
     const { message, show } = props.flash;
+
 
     useEffect(() => {
         if(props.flash.show) {
@@ -14,9 +17,10 @@ function Flash (props) {
         }
     });
 
+
     return (
         show &&
-        <div className="alert alert-dismissible alert-success" style={{ position: 'fixed', bottom: '10px', right: '10px'}}>
+        <div className={`alert alert-dismissible alert-success animated ${animationClassName}` } style={{ position: 'fixed', bottom: '10px', right: '10px'}}>
             <strong>Well done!</strong> { message }.
         </div>
     )
