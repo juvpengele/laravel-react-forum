@@ -81,11 +81,15 @@ const Reply = ({ reply, auth, onDelete, onEdit, onLike }) => {
                     <h5>
                         {reply.creator.name}
                     </h5>
-                    <LikeReplyButton
-                        reply={reply}
-                        auth={auth}
-                        onLike={onLike}
-                    />
+                    <div>
+
+                        <LikeReplyButton
+                            reply={reply}
+                            auth={auth}
+                            onLike={onLike}
+                        />
+                    </div>
+
                 </div>
                 <hr/>
                 { showContent() }

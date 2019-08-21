@@ -32,4 +32,5 @@ class UserTest extends TestCase
 
         $this->assertCount(1, $john->likes);
     }
+
 }

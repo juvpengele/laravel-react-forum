@@ -17,7 +17,6 @@ const Paginator = (props) =>  {
 
             return pages.map((page, index) => {
                 let activeClass = props.meta.current_page === page ? 'active' : '';
-
                 return (
                     <li className={`page-item ${activeClass}`} key={index}>
                         <a className="page-link"  href="#" onClick={ () => props.changePage(page) }>{ page }</a>

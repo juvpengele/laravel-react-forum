@@ -8,8 +8,7 @@ const ThreadLayoutRoutes = ({ component: Component,  ...rest }) => {
             <EmptyLayout>
                 <Component {...matchProps} Middleware={ rest.middleware }/>
             </EmptyLayout>
-        )
-    }
+        )}
     />
 };
 

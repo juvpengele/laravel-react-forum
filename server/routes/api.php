@@ -18,6 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(["middleware" => "cors"], function () {
+
     Route::apiResource("threads", "ThreadsController")->names([
         "index"     => "api.threads.index",
         "store"     => "api.threads.store",
@@ -30,11 +31,13 @@ Route::group(["middleware" => "cors"], function () {
 
     //Replies
     Route::post('/replies', 'RepliesController@store')->name('api.replies.store');
-    Route::delete('/replies/{reply}', 'RepliesController@delete')->name('api.replies.delete');
     Route::put('/replies/{reply}', 'RepliesController@update')->name('api.replies.update');
+    Route::delete('/replies/{reply}', 'RepliesController@delete')->name('api.replies.delete');
+
 
     Route::post('/replies/{reply}/likes', 'LikeRepliesController@store')->name('api.replies.likes.store');
     Route::delete('/replies/{reply}/likes', 'LikeRepliesController@destroy')->name('api.replies.likes.destroy');
+
 
     Route::get("/{category}/{thread}", "ThreadsController@show")->name("api.threads.show");
     Route::get("/{category}/{thread}/replies", "RepliesController@index")->name("api.threads.replies.index");
@@ -46,8 +49,6 @@ Route::group(["middleware" => "cors"], function () {
      */
     Route::post("/{category}/{thread}/likes", "LikeThreadsController@store")->name("api.threads.likes.store");
     Route::delete("/{category}/{thread}/likes", "LikeThreadsController@destroy")->name("api.threads.likes.destroy");
-
-
 
 
     //Authentication

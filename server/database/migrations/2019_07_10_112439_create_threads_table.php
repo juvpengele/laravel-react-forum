@@ -21,7 +21,7 @@ class CreateThreadsTable extends Migration
             $table->unsignedBigInteger("user_id");
             $table->unsignedBigInteger("category_id");
             $table->unsignedBigInteger("best_reply_id")->nullable();
-            $table->unsignedBigInteger("visits_count");
+            $table->unsignedBigInteger("visits_count")->default(0);
             $table->timestamps();
 
             $table->foreign("category_id")->references("id")->on("categories")->onDelete("cascade");

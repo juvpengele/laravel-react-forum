@@ -10,7 +10,7 @@ class Thread extends Model
 {
     use Favoritable;
 
-    protected $fillable = ['best_reply_id'];
+    protected $fillable = ['title', 'content', 'slug', 'user_id', 'category_id', 'best_reply_id'];
 
     public $with = ["category", "creator"];
     public $appends = ['ago', 'is_liked'];

@@ -96,4 +96,9 @@ class User extends Authenticatable implements JWTSubject
             'likeable_type' => get_class($model)
         ])->delete();
     }
+
+    public function getTokenAttribute()
+    {
+        return User::token($this->id);
+    }
 }
