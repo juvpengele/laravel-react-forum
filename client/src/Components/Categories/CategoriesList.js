@@ -1,26 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import {Link} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import config from '../../Services/Config';
 import axios from 'axios';
 
 
-const useFetch = (url) => {
-    const [categories, setCategories] = useState([]);
 
-    // empty array as second argument equivalent to componentDidMount
-    useEffect(() => {
-        axios.get(url)
-            .then(({ data : categoryCollection}) => {
-                setCategories( categoryCollection.data );
-            });
-    }, []);
-
-    return categories;
-};
 
 
 
 const CategoriesList = (props) => {
+
+    const useFetch = (url) => {
+        const [categories, setCategories] = useState([]);
+
+        // empty array as second argument equivalent to componentDidMount
+        useEffect(() => {
+            axios.get(url)
+                .then(({ data : categoryCollection}) => {
+                    setCategories( categoryCollection.data );
+                    props.dispatch({type: "ADD_CATEGORIES", value: categoryCollection.data});
+                });
+
+        }, []);
+
+        return categories;
+    };
+
+
 
     const endpoint  = `${config.remoteBaseUrl}/categories`;
     const categories = useFetch(endpoint);
@@ -41,4 +48,6 @@ const CategoriesList = (props) => {
     )
 };
 
-export default CategoriesList;
+const mapStateToProps = (state) => ({ categories: state.categories });
+
+export default connect(mapStateToProps)(CategoriesList);

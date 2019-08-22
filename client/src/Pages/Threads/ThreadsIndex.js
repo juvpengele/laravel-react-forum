@@ -1,12 +1,12 @@
 import React from "react";
 import axios from "axios";
-import Config from "../Services/Config";
+import Config from "../../Services/Config";
 import { connect } from 'react-redux';
 
 //Components
-import Paginator from "../Components/Paginator/Pagination";
-import ThreadCard from '../Components/Threads/ThreadCard';
-import Loader from '../Components/Utils/Loader';
+import Paginator from "../../Components/Paginator/Pagination";
+import ThreadCard from '../../Components/Threads/ThreadCard';
+import Loader from '../../Components/Utils/Loader';
 
 
 class ThreadsIndex extends React.Component

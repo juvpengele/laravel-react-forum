@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 
-import ThreadsIndex from "../Pages/ThreadsIndex";
-import ThreadShow from "../Pages/ThreadShow"
+import ThreadsIndex from "../Pages/Threads/ThreadsIndex";
+import ThreadShow from "../Pages/Threads/ThreadShow"
 
 import Header from "../Pages/Layouts/Header";
 import Footer from "../Pages/Layouts/Footer";
@@ -13,6 +13,7 @@ import SignUp from "../Pages/Auth/Signup";
 import Login from "../Pages/Auth/Login";
 import Flash from "../Components/Utils/Flash";
 import RequireAuth from "../Components/AuthMiddleware/RequireAuth";
+import CreateThread from "../Pages/Threads/CreateThread";
 
 const Routes = () => (
     <Router>
@@ -28,6 +29,7 @@ const Routes = () => (
             <AuthLayoutRoutes path="/login" component={ Login } exact middleware={ RequireAuth }/>
         </div>
 
+        <CreateThread />
 
         <Footer/>
 

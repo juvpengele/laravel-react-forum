@@ -1,12 +1,12 @@
 import React from "react";
-import config from "../Services/Config";
+import config from "../../Services/Config";
 import axios from "axios";
 import { connect } from 'react-redux';
 
 //Components
-import ThreadCard from "../Components/Threads/ThreadCard";
-import Loader from "../Components/Utils/Loader";
-import Replies from "../Components/Replies/Replies";
+import ThreadCard from "../../Components/Threads/ThreadCard";
+import Loader from "../../Components/Utils/Loader";
+import Replies from "../../Components/Replies/Replies";
 
 class ThreadShow extends React.Component{
     constructor(props) {
