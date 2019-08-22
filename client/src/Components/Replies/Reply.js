@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import config from '../../Services/Config';
 import axios from 'axios';
 import LikeReplyButton from "./LikeReplyButton";
+import BestReplyButton from "./BestReplyButton";
 
 
-const Reply = ({ reply, auth, onDelete, onEdit, onLike }) => {
+const Reply = ({ thread, reply, auth, onDelete, onEdit, onLike, onMark, onRemoveAsBest }) => {
     const [editing, setEditing] = useState(false);
     const [content, setContent] = useState('');
 
@@ -74,14 +75,26 @@ const Reply = ({ reply, auth, onDelete, onEdit, onLike }) => {
     }
 
 
+    function isBestReply() {
+        return parseInt(thread.best_reply_id) === parseInt(reply.id);
+    }
+
+
     return (
-        <div className="card  mb-3">
+        <div className={`${isBestReply() ? `best_reply`: ''}   card mb-3`}>
             <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
                     <h5>
                         {reply.creator.name}
                     </h5>
                     <div>
+                        {
+                            parseInt(auth.id) === parseInt(thread.creator.id) &&
+                            <BestReplyButton auth={auth} thread={thread} reply={reply}
+                                onPress={ () => onMark(reply)} active={ isBestReply() }
+                                 onRemove={ () => onRemoveAsBest() }
+                            />
+                        }
 
                         <LikeReplyButton
                             reply={reply}

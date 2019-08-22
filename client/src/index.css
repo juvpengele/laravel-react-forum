@@ -1,3 +1,7 @@
 html {
   scroll-behavior: smooth;
 }
+
+.best_reply {
+  border: 1.5px solid #09b5b5fc !important;
+}

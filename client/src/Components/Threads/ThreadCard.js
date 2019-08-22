@@ -37,9 +37,13 @@ const ThreadCard = ({ thread, onLike, auth }) => {
                         <div>
                             { thread.creator.name } said:
                         </div>
-                        <button className={ getLikeClassName(thread) } onClick={ () => favoriteThread(thread, onLike, auth) }>
-                            <i className="fa fa-heart" /> { thread.likes_count }
-                        </button>
+                        <div>
+                            <button className={ getLikeClassName(thread) } onClick={
+                                () => favoriteThread(thread, onLike, auth) }
+                            >
+                                <i className="fa fa-heart" /> { thread.likes_count }
+                            </button>
+                        </div>
                     </div>
                     <div className="card-body">
                         <Link to={ `/${thread.category.slug}/${thread.slug }` }>

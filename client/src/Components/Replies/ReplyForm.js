@@ -28,17 +28,23 @@ function ReplyForm(props) {
 
     }
 
-    return (
-        <form method="POST" onSubmit={saveReply}>
+    let JsxElement = null;
+
+    if(props.auth.loggedIn) {
+        JsxElement =  (
+            <form method="POST" onSubmit={saveReply}>
             <textarea className="form-control mb-3" id="exampleTextarea" rows="3"
-                onChange={(event) => setContent(event.target.value)}
-                value={content}
+                      onChange={(event) => setContent(event.target.value)}
+                      value={content}
             />
-            <button className="btn btn-info mb-3" type="submit">
-                { loading ? 'Submitting...' : 'Reply'}
-            </button>
-        </form>
-    )
+                <button className="btn btn-info mb-3" type="submit">
+                    { loading ? 'Submitting...' : 'Reply'}
+                </button>
+            </form>
+        )
+    }
+
+    return JsxElement;
 }
 
 const mapStateToProps = (state) => ({

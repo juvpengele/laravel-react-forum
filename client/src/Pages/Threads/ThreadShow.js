@@ -20,6 +20,8 @@ class ThreadShow extends React.Component{
         this.likeThread = this.likeThread.bind(this);
         this.addRepliesCount = this.addRepliesCount.bind(this);
         this.removeRepliesCount = this.removeRepliesCount.bind(this);
+        this.markAsBestReply = this.markAsBestReply.bind(this);
+        this.removeAsBestReply = this.removeAsBestReply.bind(this);
     }
 
     componentDidMount() {
@@ -84,6 +86,20 @@ class ThreadShow extends React.Component{
 
     }
 
+    markAsBestReply(reply) {
+        this.setState((prevState) => {
+            return {
+                thread: {...prevState.thread, best_reply_id: reply.id}
+            }
+        })
+    }
+
+    removeAsBestReply() {
+        this.setState(prevState => ({
+            thread: {...prevState.thread, best_reply_id: null}
+        }))
+    }
+
     render() {
         return (
             <>
@@ -101,6 +117,8 @@ class ThreadShow extends React.Component{
                         thread={this.state.thread}
                         onNewReply={this.addRepliesCount}
                         onRemovedReply={this.removeRepliesCount}
+                        onMarkBestReply={this.markAsBestReply}
+                        onRemoveAsBestReply={this.removeAsBestReply}
                     />
                 }
 

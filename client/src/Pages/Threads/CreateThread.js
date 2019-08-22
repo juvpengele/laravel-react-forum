@@ -17,14 +17,21 @@ const CreateThread = (props) => {
         props.dispatch({type: "SHOW_FLASH", value: { message: "Your thread has been created successfully ! "}});
     }
 
-    return (
-        <>
-            <NewThreadButton onPressed={() => setShowModal(true)  } />
-            <NewThreadModal auth={props.auth} show={showModal}
-                onClosed={() => setShowModal(false) } onSaved={ redirectToThread }
-            />
-        </>
-    )
+    let JsxElement = '';
+
+    if(props.auth.loggedIn) {
+        JsxElement = (
+            <>
+
+                <NewThreadButton onPressed={() => setShowModal(true)  } />
+                <NewThreadModal auth={props.auth} show={showModal}
+                                onClosed={() => setShowModal(false) } onSaved={ redirectToThread }
+                />
+            </>
+        )
+    }
+
+    return JsxElement;
 };
 
 const mapStateToProps = (state) => ({ auth : state.auth, flash: state.flash });

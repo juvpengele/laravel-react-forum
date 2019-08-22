@@ -18,7 +18,7 @@ const authReducer = (state = INITIAL_STATE, action) => {
             return {
                 token: action.value.access_token,
                 loggedIn: true,
-                id: action.value.auth_id
+                id: parseInt(action.value.auth_id)
             };
 
         case "LOGOUT":

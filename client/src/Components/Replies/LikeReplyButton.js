@@ -7,13 +7,17 @@ import config from '../../Services/Config';
 function LikeReplyButton({reply, onLike, auth}) {
 
     function likeReply() {
-        const endpoint = `${config.remoteBaseUrl}/replies/${ reply.id }/likes?token=${ auth.token}`;
-        const verb = reply.is_liked ? 'delete' : 'post';
+        
+        if(auth.loggedIn) {
+            const endpoint = `${config.remoteBaseUrl}/replies/${ reply.id }/likes?token=${ auth.token}`;
+            const verb = reply.is_liked ? 'delete' : 'post';
 
-        onLike(reply);
+            onLike(reply);
 
-        axios[verb](endpoint)
-            .catch(error => console.log(error))
+            axios[verb](endpoint)
+                .catch(error => console.log(error))
+        }
+
     }
 
     function getClassName() {

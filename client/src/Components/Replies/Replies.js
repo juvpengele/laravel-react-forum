@@ -16,12 +16,13 @@ class Replies extends React.Component {
         this.editReply = this.editReply.bind(this);
         this.deleteReply = this.deleteReply.bind(this);
         this.likeReply = this.likeReply.bind(this);
+        this.setBestReply = this.setBestReply.bind(this);
+        this.removeAsBestReply = this.removeAsBestReply.bind(this);
     }
 
     componentDidMount() {
         const {category, slug} = this.props.thread;
         const { auth } = this.props;
-
 
         const endpoint = auth.loggedIn?
             `${config.remoteBaseUrl}/${category.slug}/${slug}/replies?token=${ auth.token}` :
@@ -89,8 +90,16 @@ class Replies extends React.Component {
             }
             return reply;
         });
+    };
+
+
+    setBestReply(reply) {
+        this.props.onMarkBestReply(reply);
     }
 
+    removeAsBestReply() {
+        this.props.onRemoveAsBestReply()
+    }
 
     render() {
         return (
@@ -100,10 +109,13 @@ class Replies extends React.Component {
                         <Reply
                             key={reply.id}
                             reply={reply}
+                            thread={this.props.thread}
                             auth={ this.props.auth }
                             onEdit={ this.editReply }
                             onDelete={ this.deleteReply }
                             onLike={this.likeReply}
+                            onMark={this.setBestReply}
+                            onRemoveAsBest={this.removeAsBestReply}
                         />
                     )
                 }
