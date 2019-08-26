@@ -116,7 +116,7 @@ function NewThreadModal({ auth, show, onClosed, onSaved, categories }) {
                 </Modal.Body>
                 <Modal.Footer>
                     <button className="btn btn-success" type="submit">
-                        { loading ? 'Saving...' : 'Save changes' } <i className="fa fa-check" />
+                        { loading ? 'Saving...' : <> <span>Save changes</span> <i className="fa fa-check" /></> }
                     </button>
                 </Modal.Footer>
             </form>

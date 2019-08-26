@@ -7,7 +7,7 @@ import config from '../../Services/Config';
 function LikeReplyButton({reply, onLike, auth}) {
 
     function likeReply() {
-        
+
         if(auth.loggedIn) {
             const endpoint = `${config.remoteBaseUrl}/replies/${ reply.id }/likes?token=${ auth.token}`;
             const verb = reply.is_liked ? 'delete' : 'post';

@@ -103,7 +103,7 @@ class AuthController extends Controller
                 'token_type' => 'bearer',
                 'expires_in' => auth()->factory()->getTTL() * 6000000,
                 'auth_id'         => auth()->id(),
-                'liked_threads' => auth()->user()->likes()->where(['likeable_type' => Thread::class])->get(['id'])
+                'name'  => auth()->user()->name
             ]
         ]);
     }

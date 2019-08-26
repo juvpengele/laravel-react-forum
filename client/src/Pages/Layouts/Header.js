@@ -51,13 +51,23 @@ const Header = (props) => {
                             </li>
                         </>
                     }
-                    {
-                        props.auth.loggedIn &&
-                        <li className="nav-item">
-                            <a href="#" className="nav-link" onClick={(event) => logOut(event)}>Logout</a>
-                        </li>
-                    }
                 </ul>
+
+                {
+                    props.auth.loggedIn &&
+                    <div className="dropdown">
+                        <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            { props.auth.name } <i className="fa fa-user text-white" style={{ fontSize: "18px" }} />
+                        </button>
+
+                        <div className="dropdown-menu dropdown-menu-right" >
+                            <button className="dropdown-item" type="button">Profile</button>
+                            <button className="dropdown-item" type="button" onClick={logOut}>Logout</button>
+                        </div>
+                    </div>
+                }
+
             </div>
         </nav>
     )
