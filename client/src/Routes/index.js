@@ -14,6 +14,7 @@ import Login from "../Pages/Auth/Login";
 import Flash from "../Components/Utils/Flash";
 import RequireAuth from "../Components/AuthMiddleware/RequireAuth";
 import CreateThread from "../Pages/Threads/CreateThread";
+import RequireGuest from "../Components/AuthMiddleware/RequireGuest";
 
 const Routes = () => (
     <Router>
@@ -25,8 +26,8 @@ const Routes = () => (
             <ThreadLayoutRoutes path="/:category/:thread" component={ ThreadShow } name="threads.show" exact/>
             <ThreadLayoutRoutes path="/categories/:category/posts" component={ ThreadsIndex } />
 
-            <AuthLayoutRoutes path="/signup" component={ SignUp } middleware={ RequireAuth } exact />
-            <AuthLayoutRoutes path="/login" component={ Login } exact middleware={ RequireAuth }/>
+            <AuthLayoutRoutes path="/signup" component={ SignUp } middleware={ RequireGuest } exact />
+            <AuthLayoutRoutes path="/login" component={ Login } exact middleware={ RequireGuest }/>
         </div>
 
         <CreateThread />

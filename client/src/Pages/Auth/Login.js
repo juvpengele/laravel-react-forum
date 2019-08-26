@@ -104,9 +104,9 @@ class Login extends React.Component {
     }
 
     render() {
-        const { Middleware : AuthMiddlware } =  this.props;
+        const { Middleware : AuthMiddleware } =  this.props;
         return (
-            <AuthMiddlware>
+            <AuthMiddleware>
                 <div className="row my-4">
                     <form className="col-md-6 row mx-auto mt-2" onSubmit={(event) => this.handleFormSubmit(event)} method="POST">
                         <h2 className="text-center col-md-12 mt-2">Login</h2>
@@ -140,7 +140,7 @@ class Login extends React.Component {
                         </div>
                     </form>
                 </div>
-            </AuthMiddlware>
+            </AuthMiddleware>
         )
     }
 }

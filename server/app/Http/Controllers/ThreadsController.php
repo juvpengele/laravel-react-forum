@@ -6,6 +6,7 @@ use App\Http\Resources\ThreadCollection;
 use App\Http\Resources\ThreadResource;
 use App\Models\Category;
 use App\Models\Thread;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -37,8 +38,12 @@ class ThreadsController extends Controller
             $threads->search($searchedTerm);
         }
 
-        $threads = $threads->withCount(["replies", "likes"])
-                            ->latest()
+        if(request('by')) {
+            $user = User::whereName(request('by'))->first();
+            $threads->where(['user_id' => $user->id]);
+        }
+
+        $threads = $threads->withCount(["replies", "likes"])->latest()
                             ->paginate(10);
 
         return new ThreadCollection($threads);

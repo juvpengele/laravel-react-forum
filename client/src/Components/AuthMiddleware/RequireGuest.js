@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-const RequireAuth = (props) => {
+const RequireGuest = (props) => {
 
     useEffect(() => {
         if(props.auth.loggedIn) {
@@ -17,4 +17,4 @@ const mapStateToProps = (state) => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps)(withRouter(RequireAuth));
+export default connect(mapStateToProps)(withRouter(RequireGuest));

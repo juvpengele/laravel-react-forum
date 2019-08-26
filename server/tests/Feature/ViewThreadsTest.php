@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Category;
 use App\Models\Reply;
 use App\Models\Thread;
+use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -89,6 +90,21 @@ class ViewThreadsTest extends TestCase
         $response = $this->getJson(route('api.categories.posts', ['category' => $category]))->json();
 
         $this->assertCount(2, $response["data"]);
+    }
+
+    /** @test */
+    public function an_authenticated_user_can_access_to_his_threads()
+    {
+        $john = create(User::class);
+
+        create(Thread::class, ['user_id' => $john->id], 2);
+        create(Thread::class, [], 5);
+
+        $endpoint = "/api/threads?by={$john->name}";
+        $response = $this->getJson($endpoint)->json();
+
+        $this->assertCount(2, $response["data"]);
+
     }
 
 }
