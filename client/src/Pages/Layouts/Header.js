@@ -62,7 +62,7 @@ const Header = (props) => {
                         </button>
 
                         <div className="dropdown-menu dropdown-menu-right" >
-                            <button className="dropdown-item" type="button">Profile</button>
+                            <Link to={"/profile/my-threads"} className="dropdown-item">Profile</Link>
                             <button className="dropdown-item" type="button" onClick={logOut}>Logout</button>
                         </div>
                     </div>
