@@ -9,6 +9,8 @@ import requireAuth from '../../Hoc/requireAuth';
 import Paginator from "../../Components/Paginator/Pagination";
 import ThreadCard from '../../Components/Threads/ThreadCard';
 import Loader from '../../Components/Utils/Loader';
+import Breadcrumb from '../../Components/Commons/Breadcrumb';
+import Sidebar from "./Sidebar";
 
 
 class ThreadsIndex extends React.Component
@@ -101,6 +103,13 @@ class ThreadsIndex extends React.Component
         return (
             <div className="row">
                 <div className="col-md-12">
+                    <Breadcrumb
+                        title="My profile"
+                        subtitle="Threads"
+                    />
+                </div>
+
+                <div className="col-md-8">
                     { threads.data.length === 0 && <Loader show={true}/> }
                     {
                         threads.data.map(thread => (
@@ -111,10 +120,13 @@ class ThreadsIndex extends React.Component
                     }
                 </div>
 
+                <div className="col-md-4">
+                    <Sidebar/>
+                </div>
+
                 <div className="col-md-12">
                     <Paginator meta={threads.meta}  changePage={this.changePage} />
                 </div>
-
             </div>
         );
     }

@@ -1,3 +1,3 @@
 export default {
-    remoteBaseUrl: "http://localhost:8001/api"
+    remoteBaseUrl: "http://localhost:8000/api"
 };

@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 
 //Components
 import Paginator from "../../Components/Paginator/Pagination";
-import ThreadCard from '../../Components/Threads/ThreadCard';
 import Loader from '../../Components/Utils/Loader';
+import ThreadCollection from "../../Components/Threads/ThreadCollection";
 
 
 class ThreadsIndex extends React.Component
@@ -28,6 +28,7 @@ class ThreadsIndex extends React.Component
         document.title = "Forum";
 
         let endpoint = this._getEndpoint(this.props.location);
+
         this._loadThreads(endpoint);
     }
 
@@ -44,9 +45,10 @@ class ThreadsIndex extends React.Component
      * @returns {string}
      * @private
      */
-    _getEndpoint({ pathname}) {
-        let endpoint = Config.remoteBaseUrl;
-        let token = this.props.auth.loggedIn ? `token=${this.props.auth.token}` : '';
+    _getEndpoint({ pathname }) {
+
+        const endpoint = Config.remoteBaseUrl;
+        const token = this.props.auth.loggedIn ? `token=${this.props.auth.token}` : '';
 
         if(pathname) {
             if(pathname === '/') {
@@ -63,8 +65,9 @@ class ThreadsIndex extends React.Component
      * @private
      */
     _loadThreads = (endpoint) => {
+
         axios.get(endpoint)
-        .then(({data: threads}) => {
+        .then(({ data: threads }) => {
             this.setState({
                 threads: {
                     data: threads.data,
@@ -94,27 +97,6 @@ class ThreadsIndex extends React.Component
         });
     };
 
-    likeThread = (likedThread) => {
-
-        const newThreads = this.state.threads.data.map((thread) => {
-            if(thread.id === likedThread.id) {
-                const actualLikesCount = parseInt(likedThread.likes_count);
-                const likes_count = likedThread.is_liked ? actualLikesCount - 1 : actualLikesCount + 1;
-
-                thread.is_liked = ! thread.is_liked;
-                thread.likes_count = likes_count;
-            }
-            return thread
-        });
-
-        this.setState(prevState => ({
-            threads: {
-                data: newThreads,
-                meta: prevState.threads.meta
-            }
-        }))
-
-    };
 
 
     render() {
@@ -124,14 +106,10 @@ class ThreadsIndex extends React.Component
             <div className="row">
                 <div className="col-md-12">
                     { threads.data.length === 0 && <Loader show={true}/> }
-                    {
-                        threads.data.map(thread => (
-                            <ThreadCard
-                                thread={thread}  onLike={this.likeThread}
-                                auth={this.props.auth}  key={thread.id}
-                            />)
-                        )
-                    }
+                    <ThreadCollection
+                        auth={this.props.auth}
+                        threads={this.state.threads.data}
+                    />
                 </div>
 
                 <div className="col-md-12">

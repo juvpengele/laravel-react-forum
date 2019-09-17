@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import ThreadSearch from "../../Components/Threads/ThreadSearch";
 import { connect } from 'react-redux';
+import NamedRoutes from '../../Routes/NamedRoutes';
 
 const Header = (props) => {
 
@@ -62,7 +63,7 @@ const Header = (props) => {
                         </button>
 
                         <div className="dropdown-menu dropdown-menu-right" >
-                            <Link to={"/profile/my-threads"} className="dropdown-item">Profile</Link>
+                            <Link to={ NamedRoutes['users.profile'] } className="dropdown-item">Profile</Link>
                             <button className="dropdown-item" type="button" onClick={logOut}>Logout</button>
                         </div>
                     </div>
