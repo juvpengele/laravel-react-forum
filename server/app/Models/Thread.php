@@ -13,7 +13,7 @@ class Thread extends Model
     protected $fillable = ['title', 'content', 'slug', 'user_id', 'category_id', 'best_reply_id'];
 
     public $with = ["category", "creator"];
-    public $appends = ['ago', 'is_liked'];
+    public $appends = ['ago', 'is_liked', 'is_resolved'];
 
 
     /**
@@ -68,6 +68,11 @@ class Thread extends Model
     public function scopeSearch($query, $term)
     {
         return $query->where('title', "LIKE", "%{$term}%");
+    }
+
+    public function getIsResolvedAttribute()
+    {
+        return $this->best_reply_id !== null;
     }
 
 }

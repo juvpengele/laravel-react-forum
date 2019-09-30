@@ -104,7 +104,20 @@ class ViewThreadsTest extends TestCase
         $response = $this->getJson($endpoint)->json();
 
         $this->assertCount(2, $response["data"]);
+    }
 
+    /** @test */
+    public function when_a_thread_has_a_best_reply_it_marks_as_resolved()
+    {
+        $john = create(User::class);
+
+        $thread = create(Thread::class, ['user_id' => $john->id]);
+        $reply = create(Reply::class, ['thread_id' => $thread->id]);
+
+        $endpoint = "/api/{$thread->category->slug}/{$thread->slug}/best-replies?token={$john->token}";
+        $this->post($endpoint, ['reply_id' => $reply->id])->assertStatus(200);
+
+        $this->assertTrue($thread->fresh()->is_resolved);
     }
 
 }

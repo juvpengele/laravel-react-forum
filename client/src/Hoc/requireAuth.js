@@ -1,6 +1,7 @@
 import React from 'react';
 
 const requireAuth = (ComposedComponent) => {
+    
     class RequireAuth extends React.Component {
 
         componentDidMount() {

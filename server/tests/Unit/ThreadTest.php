@@ -67,4 +67,19 @@ class ThreadTest extends TestCase
 
         $this->assertEquals(1, $thread->likes->count());
     }
+
+    /** @test */
+    public function a_thread_with_best_reply_is_resolved()
+    {
+        $thread = create(Thread::class);
+        $reply = create(Reply::class);
+
+
+        $this->assertFalse($thread->is_resolved);
+
+        $thread->update(['best_reply_id' => $reply->id]);
+
+        $this->assertTrue($thread->is_resolved);
+
+    }
 }

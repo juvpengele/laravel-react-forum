@@ -27,7 +27,8 @@ class ThreadResource extends JsonResource
             "replies_count" => $this->replies()->count(),
             "likes_count" => $this->likes()->count(),
             "is_liked"  => $this->is_liked,
-            "best_reply_id" => $this->best_reply_id
+            "best_reply_id" => $this->best_reply_id,
+            "is_resolved" => $this->is_resolved
         ];
     }
 }
