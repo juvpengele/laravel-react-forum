@@ -23,8 +23,6 @@ function favoriteThread(thread, favoriteHandler, auth) {
 }
 
 
-
-
 const ThreadCard = ({ thread, onLike, auth }) => {
     let element = '';
     if(thread) {
@@ -37,7 +35,7 @@ const ThreadCard = ({ thread, onLike, auth }) => {
                         <div>
                             { thread.creator.name } said:
                         </div>
-                        <div>
+                        <div className="d-flex align-items-center">
                             <button className={ getLikeClassName(thread) } onClick={
                                 () => favoriteThread(thread, onLike, auth) }
                             >
@@ -51,13 +49,21 @@ const ThreadCard = ({ thread, onLike, auth }) => {
                                 { thread.title }
                             </h5>
                         </Link>
-                        <div>
-                        <span className="mr-2">
-                            <i className="fa fa-comments"/> { thread.replies_count }
-                        </span>
-                            <span>
-                            <i className="fa fa-eye"/> { thread.visits_count }
-                        </span>
+                        <div className="d-flex justify-content-between align-items-center">
+                            <div>
+                                 <span className="mr-2">
+                                    <i className="fa fa-comments"/> { thread.replies_count }
+                                 </span>
+                                 <span>
+                                    <i className="fa fa-eye"/> { thread.visits_count }
+                                 </span>
+                            </div>
+                            <div>
+                                {
+                                    thread.is_resolved &&
+                                    <i className="fa fa-check text-success ml-2" style={{ fontSize: "25px", fontWeight: "bolder"}} />
+                                }
+                            </div>
                         </div>
                     </div>
                     <div className="card-footer d-flex justify-content-between align-items-center">

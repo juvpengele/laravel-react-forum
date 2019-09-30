@@ -89,14 +89,14 @@ class ThreadShow extends React.Component{
     markAsBestReply(reply) {
         this.setState((prevState) => {
             return {
-                thread: {...prevState.thread, best_reply_id: reply.id}
+                thread: {...prevState.thread, best_reply_id: reply.id, is_resolved: true}
             }
         })
     }
 
     removeAsBestReply() {
         this.setState(prevState => ({
-            thread: {...prevState.thread, best_reply_id: null}
+            thread: {...prevState.thread, best_reply_id: null, is_resolved: false}
         }))
     }
 
