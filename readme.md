@@ -94,11 +94,11 @@ store for the application.
 ### Client
 
 
-* Install the packages for laravel:
+* Move to the client directory:
 
          laravel-react-forum$ cd client
           
-* Install React dependencies (if you use npm, npm install):
+* Install client dependencies (if you use npm, npm install):
 
           laravel-react-forum/client$ yarn
         
