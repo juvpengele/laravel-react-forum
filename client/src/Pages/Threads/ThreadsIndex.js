@@ -72,11 +72,15 @@ class ThreadsIndex extends React.Component
                 threads: {
                     data: threads.data,
                     meta: threads.meta
-                },
-                loader: false
+                }
             })
         })
         .catch(error => console.log(error))
+        .finally(() => {
+            this.setState({
+                loader: false
+            });
+        })
     };
 
 
@@ -105,7 +109,7 @@ class ThreadsIndex extends React.Component
         return (
             <div className="row">
                 <div className="col-md-12">
-                    { threads.data.length === 0 && <Loader show={true}/> }
+                    <Loader show={this.state.loader}/>
                     <ThreadCollection
                         auth={this.props.auth}
                         threads={this.state.threads.data}

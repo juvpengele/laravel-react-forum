@@ -83,7 +83,6 @@ class ThreadShow extends React.Component{
                 thread: {...prevState.thread, likes_count, is_liked }
             }
         })
-
     }
 
     markAsBestReply(reply) {
@@ -103,7 +102,7 @@ class ThreadShow extends React.Component{
     render() {
         return (
             <>
-                { this.state.loading && <Loader show={true}/>}
+                <Loader show={this.state.loading}/>
                 <ThreadCard
                     thread={this.state.thread}
                     onLike={this.likeThread}

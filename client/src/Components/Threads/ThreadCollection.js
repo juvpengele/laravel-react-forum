@@ -3,13 +3,9 @@ import ThreadCard from '../../Components/Threads/ThreadCard';
 
 class ThreadCollection extends React.Component {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            threads: []
-        }
-    }
+    state = {
+        threads: []
+    };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
        if(prevProps.threads !== this.props.threads){
@@ -33,7 +29,6 @@ class ThreadCollection extends React.Component {
         });
 
         this.setState(threads);
-
     };
 
     render() {
@@ -42,11 +37,10 @@ class ThreadCollection extends React.Component {
                 {
                     this.state.threads.map(thread => (
                         <ThreadCard
-                            thread={thread}
+                            thread={thread} auth={this.props.auth} key={thread.id}
                             onLike={this.likeThread}
-                            auth={this.props.auth}
-                            key={thread.id}
-                        /> )
+                        />
+                        )
                     )
                 }
             </>
