@@ -15,6 +15,8 @@ class AvatarController extends Controller
      */
     public function update()
     {
+        request()->validate(['avatar' => 'required|image']);
+
         auth()->user()->avatar()
             ->update(
                 request()->file('avatar')

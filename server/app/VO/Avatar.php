@@ -19,7 +19,7 @@ class Avatar
     public function remove(?string $avatar = null) : void
     {
         $avatar = $avatar ?: $this->user->profile_picture;
-        
+
         Storage::disk('public')->delete('avatars/'. $avatar);
     }
 

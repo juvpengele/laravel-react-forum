@@ -20,7 +20,7 @@ class UserProfileTest extends TestCase
         Storage::fake("public");
         $john = create(User::class);
 
-        $this->put("/api/me/avatar?token={$john->token}", [
+        $this->putJson("/api/me/avatar?token={$john->token}", [
             "avatar" => UploadedFile::fake()->image("avatar.png")
         ]);
 
@@ -34,13 +34,13 @@ class UserProfileTest extends TestCase
         Storage::fake("public");
         $john = create(User::class);
 
-        $this->put("/api/me/avatar?token={$john->token}", [
+        $this->putJson("/api/me/avatar?token={$john->token}", [
             "avatar" => UploadedFile::fake()->image("avatar.png")
         ]);
 
         $previousProfilePicture = $john->fresh()->profile_picture;
 
-        $this->put("/api/me/avatar?token={$john->token}", [
+        $this->putJson("/api/me/avatar?token={$john->token}", [
             "avatar" => UploadedFile::fake()->image("avatar.png")
         ]);
 
@@ -53,15 +53,28 @@ class UserProfileTest extends TestCase
         Storage::fake("public");
         $john = create(User::class);
 
-        $this->put("/api/me/avatar?token={$john->token}", [
+        $this->putJson("/api/me/avatar?token={$john->token}", [
             "avatar" => UploadedFile::fake()->image("avatar.png")
         ]);
 
         $previousProfilePicture = $john->fresh()->profile_picture;
 
-        $this->delete("/api/me/avatar?token={$john->token}");
+        $this->deleteJson("/api/me/avatar?token={$john->token}");
 
         Storage::disk("public")->assertMissing("avatars/".$previousProfilePicture);
         $this->assertEquals("default.png", $john->fresh()->profile_picture);
+    }
+
+    /** @test */
+    public function updating_an_avatar_requires_an_image()
+    {
+        $this->withExceptionHandling();
+
+        $john = create(User::class);
+        $response = $this->putJson("/api/me/avatar?token={$john->token}", ["avatar" => ""]);
+
+        $jsonResponse = $response->json();
+
+        $this->assertContains("avatar", array_keys($jsonResponse["errors"]));
     }
 }
