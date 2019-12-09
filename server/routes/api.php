@@ -58,4 +58,9 @@ Route::group(["middleware" => "cors"], function () {
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
 
+    // User profile
+    Route::group(['prefix' => 'me'], function() {
+       Route::put("avatar", "Users\AvatarController")->name("users.avatar");
+    });
+
 });

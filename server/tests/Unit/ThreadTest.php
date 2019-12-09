@@ -74,7 +74,6 @@ class ThreadTest extends TestCase
         $thread = create(Thread::class);
         $reply = create(Reply::class);
 
-
         $this->assertFalse($thread->is_resolved);
 
         $thread->update(['best_reply_id' => $reply->id]);

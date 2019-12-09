@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ReplyResource;
 use App\Models\Reply;
 use App\Models\Thread;
-use Illuminate\Http\Request;
 use JWTAuth;
 
 
@@ -41,6 +40,7 @@ class RepliesController extends Controller
         return new ReplyResource($reply);
     }
 
+
     public function update(Reply $reply)
     {
         $this->authorize('update', $reply);
@@ -49,6 +49,7 @@ class RepliesController extends Controller
 
         return new ReplyResource($reply);
     }
+
 
     public function delete(Reply $reply)
     {

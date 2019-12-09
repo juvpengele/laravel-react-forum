@@ -35,7 +35,6 @@ class Login extends React.Component {
         });
     }
 
-
     handleFormSubmit(event) {
         event.preventDefault();
         let attributes = {

@@ -4,9 +4,11 @@ namespace App;
 
 use App\Models\Like;
 use App\Models\Reply;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Str;
 use Laravel\Passport\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
@@ -20,7 +22,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'profile_picture'
     ];
 
     /**
@@ -101,4 +103,22 @@ class User extends Authenticatable implements JWTSubject
     {
         return User::token($this->id);
     }
+
+    public function updateAvatar(UploadedFile $image) : string
+    {
+        $pictureName = Str::random(40) .".". $image->getClientOriginalExtension();
+        $image->storeAs("avatars", $pictureName, ['disk' => 'public']);
+
+        $this->update([
+            'profile_picture' => $pictureName
+        ]);
+
+        return $this->avatar;
+    }
+
+    public function getAvatarAttribute()
+    {
+        return asset("storage/avatars/". $this->attributes['profile_picture']);
+    }
+
 }

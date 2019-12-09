@@ -26,7 +26,7 @@ class BestRepliesController extends Controller
             return response()->json(['data' => 'Unauthorized action'], 403);
         }
 
-        $thread->update([ 'best_reply_id' => null ]);
+        $thread->update(['best_reply_id' => null]);
 
         return response(['data' => [
             'best_reply_id' => null
