@@ -8,6 +8,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Laravel\Passport\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -15,6 +16,8 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
+
+    const DEFAULT_AVATAR = 'default.png';
 
     /**
      * The attributes that are mass assignable.
@@ -113,12 +116,23 @@ class User extends Authenticatable implements JWTSubject
             'profile_picture' => $pictureName
         ]);
 
+        $this->removePreviousAvatar();
+
         return $this->avatar;
     }
 
     public function getAvatarAttribute()
     {
         return asset("storage/avatars/". $this->attributes['profile_picture']);
+    }
+
+    private function removePreviousAvatar()
+    {
+        $avatar = $this->attributes['profile_picture'];
+
+        if($avatar !== User::DEFAULT_AVATAR) {
+            Storage::disk('public')->delete('avatars/'. $avatar);
+        }
     }
 
 }

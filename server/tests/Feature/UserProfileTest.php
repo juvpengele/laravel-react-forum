@@ -19,12 +19,31 @@ class UserProfileTest extends TestCase
     {
         Storage::fake("public");
         $john = create(User::class);
-        
+
         $this->put("/api/me/avatar?token={$john->token}", [
             "avatar" => UploadedFile::fake()->image("avatar.png")
         ]);
 
         $this->assertNotEquals("default.png", $john->fresh()->profile_picture);
         Storage::disk("public")->assertExists("avatars/".$john->fresh()->profile_picture);
+    }
+
+    /** @test */
+    public function if_a_user_updates_his_previous_avatar_is_removed()
+    {
+        Storage::fake("public");
+        $john = create(User::class);
+
+        $this->put("/api/me/avatar?token={$john->token}", [
+            "avatar" => UploadedFile::fake()->image("avatar.png")
+        ]);
+
+        $previousProfilePicture = $john->fresh()->profile_picture;
+
+        $this->put("/api/me/avatar?token={$john->token}", [
+            "avatar" => UploadedFile::fake()->image("avatar.png")
+        ]);
+
+        Storage::disk("public")->assertMissing("avatars/".$previousProfilePicture);
     }
 }
