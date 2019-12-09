@@ -4,13 +4,9 @@ namespace App;
 
 use App\Models\Like;
 use App\Models\Reply;
-use Illuminate\Http\UploadedFile;
+use App\VO\Avatar;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use Laravel\Passport\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
@@ -107,32 +103,9 @@ class User extends Authenticatable implements JWTSubject
         return User::token($this->id);
     }
 
-    public function updateAvatar(UploadedFile $image) : string
+    public function avatar()
     {
-        $pictureName = Str::random(40) .".". $image->getClientOriginalExtension();
-        $image->storeAs("avatars", $pictureName, ['disk' => 'public']);
-
-        $this->update([
-            'profile_picture' => $pictureName
-        ]);
-
-        $this->removePreviousAvatar();
-
-        return $this->avatar;
-    }
-
-    public function getAvatarAttribute()
-    {
-        return asset("storage/avatars/". $this->attributes['profile_picture']);
-    }
-
-    private function removePreviousAvatar()
-    {
-        $avatar = $this->attributes['profile_picture'];
-
-        if($avatar !== User::DEFAULT_AVATAR) {
-            Storage::disk('public')->delete('avatars/'. $avatar);
-        }
+        return new Avatar($this);
     }
 
 }

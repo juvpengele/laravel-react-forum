@@ -60,7 +60,8 @@ Route::group(["middleware" => "cors"], function () {
 
     // User profile
     Route::group(['prefix' => 'me'], function() {
-       Route::put("avatar", "Users\AvatarController")->name("users.avatar");
+       Route::put("avatar", "Users\AvatarController@update")->name("users.avatar.update");
+       Route::delete("avatar", "Users\AvatarController@destroy")->name("users.avatar.delete");
     });
 
 });

@@ -15,7 +15,7 @@ class AvatarResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'avatar' => $this->avatar
+            'avatar' => $this->avatar()->link()
         ];
     }
 }
