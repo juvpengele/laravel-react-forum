@@ -71,7 +71,7 @@ class Login extends React.Component {
                 'Content-Type': 'application/json',
             }
         })
-        .then(({ data : authInfos}) => {
+        .then(({ data : authInfos }) => {
 
             this.props.dispatch({type: "LOGIN", value: authInfos.data});
             this.props.dispatch(

@@ -69,7 +69,7 @@ class SignUp extends React.Component {
 
 
     _loginAuth(authInfos) {
-        this.props.dispatch({type: "LOGIN", value: authInfos});
+        this.props.dispatch({type: "LOGIN", value: authInfos });
         this.props.dispatch({type: "SHOW_FLASH", value: {
                 message: 'You are signed up successfully',
             }
