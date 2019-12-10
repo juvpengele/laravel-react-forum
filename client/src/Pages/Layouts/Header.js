@@ -64,6 +64,9 @@ const Header = (props) => {
 
                         <div className="dropdown-menu dropdown-menu-right" >
                             <Link to={ NamedRoutes['users.profile'] } className="dropdown-item">Profile</Link>
+                            <Link to={ NamedRoutes['users.settings'] } className="dropdown-item">
+                                <i className="fa fa-cogs" /> Settings
+                            </Link>
                             <button className="dropdown-item" type="button" onClick={logOut}>Logout</button>
                         </div>
                     </div>
