@@ -15,6 +15,7 @@ const Avatar = (props) => {
     function handleFileInputChange(event) {
         const image = event.target.files[0];
 
+        setLoading(true);
         _saveImage(image);
         _addToPreview(image);
     }
@@ -36,7 +37,7 @@ const Avatar = (props) => {
         .catch(error => {
            console.log(error);
         })
-
+        .finally(() => setLoading(false))
     }
 
     function url() {
@@ -52,6 +53,29 @@ const Avatar = (props) => {
         }
     }
 
+    function removeAvatar() {
+
+        setFile(Config.defaultAvatarLink);
+
+        axios.delete(url())
+            .then(({ data: avatar}) => {
+                props.dispatch({
+                    type: "CHANGE_AVATAR",
+                    value: avatar.data.avatar
+                })
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
+    function getLabelText() {
+        if(loading) {
+            return "Saving...";
+        }
+        return <>Upload <i className="fa fa-cloud-upload"/></>;
+    }
+
     return (
         <>
             <div className="d-flex justify-content-center align-items-center mb-2">
@@ -60,10 +84,10 @@ const Avatar = (props) => {
             <div className="flex justify-content-center">
                 <input type="file" id="avatar" onChange={ handleFileInputChange } hidden/>
                 <label className="btn btn-info mr-2 mt-2" htmlFor="avatar" style={{ cursor: "pointer" }}>
-                    Upload <i className="fa fa-cloud-upload"/>
+                    { getLabelText() }
                 </label>
 
-                <button className="btn btn-danger">
+                <button className="btn btn-danger" onClick={ removeAvatar }>
                     <i className="fa fa-trash" />
                 </button>
             </div>
