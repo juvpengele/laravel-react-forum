@@ -17,6 +17,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/', function() {
+    return response()->json(["Status" => "Application running..."]);
+});
+
 Route::group(["middleware" => "cors"], function () {
 
     Route::apiResource("threads", "ThreadsController")->names([
