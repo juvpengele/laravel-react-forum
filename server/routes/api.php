@@ -58,9 +58,9 @@ Route::group(["middleware" => "cors"], function () {
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
 
-    // User profile
+    // Avatar
     Route::group(['prefix' => 'me'], function() {
-       Route::put("avatar", "Users\AvatarController@update")->name("users.avatar.update");
+       Route::post("avatar", "Users\AvatarController@update")->name("users.avatar.update");
        Route::delete("avatar", "Users\AvatarController@destroy")->name("users.avatar.delete");
     });
 

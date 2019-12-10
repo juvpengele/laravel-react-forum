@@ -11,7 +11,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserProfileTest extends TestCase
 {
-
     use WithFaker, RefreshDatabase;
 
     /** @test */
@@ -20,7 +19,7 @@ class UserProfileTest extends TestCase
         Storage::fake("public");
         $john = create(User::class);
 
-        $this->putJson("/api/me/avatar?token={$john->token}", [
+        $this->postJson("/api/me/avatar?token={$john->token}", [
             "avatar" => UploadedFile::fake()->image("avatar.png")
         ]);
 
@@ -34,13 +33,13 @@ class UserProfileTest extends TestCase
         Storage::fake("public");
         $john = create(User::class);
 
-        $this->putJson("/api/me/avatar?token={$john->token}", [
+        $this->postJson("/api/me/avatar?token={$john->token}", [
             "avatar" => UploadedFile::fake()->image("avatar.png")
         ]);
 
         $previousProfilePicture = $john->fresh()->profile_picture;
 
-        $this->putJson("/api/me/avatar?token={$john->token}", [
+        $this->postJson("/api/me/avatar?token={$john->token}", [
             "avatar" => UploadedFile::fake()->image("avatar.png")
         ]);
 
@@ -53,7 +52,7 @@ class UserProfileTest extends TestCase
         Storage::fake("public");
         $john = create(User::class);
 
-        $this->putJson("/api/me/avatar?token={$john->token}", [
+        $this->postJson("/api/me/avatar?token={$john->token}", [
             "avatar" => UploadedFile::fake()->image("avatar.png")
         ]);
 
@@ -71,7 +70,7 @@ class UserProfileTest extends TestCase
         $this->withExceptionHandling();
 
         $john = create(User::class);
-        $response = $this->putJson("/api/me/avatar?token={$john->token}", ["avatar" => ""]);
+        $response = $this->postJson("/api/me/avatar?token={$john->token}", ["avatar" => ""]);
 
         $jsonResponse = $response->json();
 

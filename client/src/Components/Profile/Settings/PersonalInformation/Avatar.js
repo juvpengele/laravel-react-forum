@@ -1,27 +1,43 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { connect } from 'react-redux';
+import Config from '../../../../Services/Config';
 
 const Avatar = (props) => {
 
     const [file, setFile] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-       setFile(props.auth.avatar);
-    }, []);
+    useEffect(() => setFile(props.auth.avatar), []);
 
     function handleFileInputChange(event) {
         const image = event.target.files[0];
 
-        //saveImage(image);
+        _saveImage(image);
         _addToPreview(image);
+    }
+
+    function _saveImage(image) {
+        let formData = new FormData();
+        formData.append('avatar', image);
+
+        axios.post(url(), formData)
+        .then(({ data: avatar}) => {
+            setFile(avatar.data.avatar)
+        })
+        .catch(error => {
+           console.log(error);
+        })
+
+    }
+
+    function url() {
+        return Config.remoteBaseUrl+ `/me/avatar?token=${props.auth.token}`;
     }
 
     function _addToPreview(image) {
         const reader = new FileReader();
-        reader.addEventListener('load', () => {
-           setFile(reader.result);
-        }, false);
+        reader.addEventListener('load', () => setFile(reader.result), false);
 
         if(image) {
             reader.readAsDataURL(image);
