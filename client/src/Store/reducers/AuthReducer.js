@@ -34,6 +34,10 @@ const authReducer = (state = INITIAL_STATE, action) => {
            Storage.clearAll();
            return { loggedIn: false, token: null, id: null, name: null, avatar: null };
 
+        case "CHANGE_AVATAR":
+            Storage.setItem('avatar', action.value);
+            return { ...state, avatar: action.value};
+
         default:
             return state;
     }

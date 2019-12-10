@@ -3,6 +3,8 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import Config from '../../../../Services/Config';
 
+
+
 const Avatar = (props) => {
 
     const [file, setFile] = useState(null);
@@ -23,7 +25,13 @@ const Avatar = (props) => {
 
         axios.post(url(), formData)
         .then(({ data: avatar}) => {
-            setFile(avatar.data.avatar)
+
+            setFile(avatar.data.avatar);
+            props.dispatch({
+                type: "CHANGE_AVATAR",
+                value: avatar.data.avatar
+            })
+
         })
         .catch(error => {
            console.log(error);
