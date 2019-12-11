@@ -76,4 +76,52 @@ class UserProfileTest extends TestCase
 
         $this->assertContains("avatar", array_keys($jsonResponse["errors"]));
     }
+
+    /** @test */
+    public function a_user_can_edit_his_personal_information()
+    {
+        $this->withoutExceptionHandling();
+
+        $john = create(User::class, ['name' => 'John Doe', 'email' => 'john@example.com']);
+
+        $url = "/api/me/personal-information?token={$john->token}";
+        $response = $this->putJson($url, ["name" => "Peter Doe", "email" => "peter@example.com"]);
+
+        $jsonResponse = $response->json();
+
+        $this->assertEquals("Peter Doe", $jsonResponse["data"]["name"]);
+        $this->assertEquals("peter@example.com", $jsonResponse["data"]["email"]);
+
+        $this->assertEquals("Peter Doe", $john->fresh()->name);
+        $this->assertEquals("peter@example.com", $john->fresh()->email);
+    }
+
+    /** @test */
+    public function a_user_must_provide_valid_data_to_update_his_information()
+    {
+        $john = create(User::class, ['name' =>"Peter Doe" , 'email' => "peter@example.com"]);
+
+        $url = "/api/me/personal-information?token={$john->token}";
+        $response = $this->putJson($url, ["name" => '', "email" => '']);
+
+        $jsonResponse = $response->json();
+
+        $this->assertContains('name', array_keys($jsonResponse['errors']));
+        $this->assertContains('email', array_keys($jsonResponse['errors']));
+    }
+
+    /** @test */
+    public function a_user_must_provide_a_unique_email_to_update_his_information()
+    {
+      
+        $john = create(User::class, ['name' => 'John Doe', 'email' => 'john@example.com']);
+        create(User::class, ['name' => 'Peter Doe', 'email' => 'peter@example.com']);
+
+        $url = "/api/me/personal-information?token={$john->token}";
+        $response = $this->putJson($url, ["name" => "John Doe", "email" => "peter@example.com"]);
+
+        $jsonResponse = $response->json();
+
+        $this->assertContains('email', array_keys($jsonResponse['errors']));
+    }
 }

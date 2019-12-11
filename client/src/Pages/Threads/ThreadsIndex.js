@@ -24,7 +24,8 @@ class ThreadsIndex extends React.Component
         };
     }
 
-    componentWillMount() {
+    componentDidMount() {
+
         document.title = "Forum";
 
         let endpoint = this._getEndpoint(this.props.location);

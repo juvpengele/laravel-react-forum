@@ -108,7 +108,7 @@ const Reply = ({ thread, reply, auth, onDelete, onEdit, onLike, onMark, onRemove
                 { showContent() }
             </div>
             {
-                auth.id == reply.user_id &&
+                parseInt(auth.id) === parseInt(reply.user_id) &&
                 <div className="card-footer  d-flex justify-content-between">
                     { showEditingButton() }
                     <button className="btn btn-danger" onClick={deleteReply} style={{ cursor: 'pointer'}} >

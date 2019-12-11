@@ -3,6 +3,9 @@ import React from "react";
 import PersonalInformation from '../../../Components/Profile/Settings/PersonalInformation';
 import Breadcrumb from "../../../Components/Commons/Breadcrumb";
 
+import requireAuth from '../../../Hoc/requireAuth';
+import { connect } from 'react-redux'
+
 const Settings = (props) => {
     return (
         <div style={{ marginTop: "3.5rem"}}>
@@ -30,4 +33,9 @@ const Settings = (props) => {
     )
 };
 
-export default Settings;
+const mapStateToProps = ({ auth }) => ({ auth });
+
+export default connect(mapStateToProps)(
+    requireAuth(Settings)
+)
+

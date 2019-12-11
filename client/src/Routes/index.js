@@ -33,7 +33,7 @@ const Routes = () => (
                 <AuthLayoutRoutes path={ NamedRoutes['users.profile'] } component={ MyThreads } exact />
                 <AuthLayoutRoutes path={ NamedRoutes['users.settings'] } component={ Settings } exact />
 
-                <ThreadLayoutRoutes path="/:category/:thread" component={ ThreadShow } name="threads.show" />
+                <ThreadLayoutRoutes path="/:category/:thread" component={ ThreadShow } name="threads.show" exact />
                 <ThreadLayoutRoutes path="/categories/:category/posts" component={ ThreadsIndex } exact />
             </Switch>
         </div>

@@ -52,7 +52,7 @@ class ThreadShow extends React.Component{
                 this.setState({ thread: data, loading: false },
                     () => document.title = this.state.thread.title + " | Forum")
             })
-            .catch(error => console.log(error.response));
+            .catch(error => console.log(error));
 
     }
 

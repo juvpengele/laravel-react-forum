@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { connect } from 'react-redux';
 
@@ -72,6 +72,7 @@ function NewThreadModal({ auth, show, onClosed, onSaved, categories }) {
                     <div className="form-group">
                         <label htmlFor="category">Category</label>
                         <select name="category_id" className="form-control" id="category" onChange={handleCategoryChange}>
+                            <option value="" disabled selected />
                             {
                                 categories.map((category) => (
                                     <option value={category.id} key={category.id} >

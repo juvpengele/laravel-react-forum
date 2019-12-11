@@ -10,7 +10,9 @@ const Avatar = (props) => {
     const [file, setFile] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => setFile(props.auth.avatar), []);
+    useEffect(() => {
+        setFile(props.auth.avatar)
+    }, []);
 
     function handleFileInputChange(event) {
         const image = event.target.files[0];

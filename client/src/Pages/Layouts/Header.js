@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import ThreadSearch from "../../Components/Threads/ThreadSearch";
 import { connect } from 'react-redux';
 import NamedRoutes from '../../Routes/NamedRoutes';
+import { withRouter } from 'react-router-dom';
 
 const Header = (props) => {
 
@@ -19,7 +20,9 @@ const Header = (props) => {
             value: {
                 message: "You are logged out successfully"
             }
-        })
+        });
+
+        props.history.push("/");
     }
 
     return (
@@ -81,4 +84,6 @@ const mapStateToProps = (state) => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps)(
+    withRouter(Header)
+);

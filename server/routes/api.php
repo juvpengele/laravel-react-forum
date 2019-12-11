@@ -64,8 +64,10 @@ Route::group(["middleware" => "cors"], function () {
 
     // Avatar
     Route::group(['prefix' => 'me'], function() {
-       Route::post("avatar", "Users\AvatarController@update")->name("users.avatar.update");
-       Route::delete("avatar", "Users\AvatarController@destroy")->name("users.avatar.delete");
+        Route::post("avatar", "Users\AvatarController@update")->name("users.avatar.update");
+        Route::delete("avatar", "Users\AvatarController@destroy")->name("users.avatar.delete");
+
+        Route::put("personal-information", "Users\PersonalInformationController");
     });
 
 });
