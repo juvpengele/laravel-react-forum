@@ -113,7 +113,7 @@ class UserProfileTest extends TestCase
     /** @test */
     public function a_user_must_provide_a_unique_email_to_update_his_information()
     {
-      
+
         $john = create(User::class, ['name' => 'John Doe', 'email' => 'john@example.com']);
         create(User::class, ['name' => 'Peter Doe', 'email' => 'peter@example.com']);
 
