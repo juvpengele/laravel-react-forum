@@ -15,6 +15,7 @@ class User extends Authenticatable implements JWTSubject
 
     const DEFAULT_AVATAR = 'default.png';
 
+    protected $appends = ['avatar_link'];
     /**
      * The attributes that are mass assignable.
      *
@@ -107,5 +108,11 @@ class User extends Authenticatable implements JWTSubject
     {
         return new Avatar($this);
     }
+
+    public function getAvatarLinkAttribute()
+    {
+        return $this->avatar()->link();
+    }
+
 
 }

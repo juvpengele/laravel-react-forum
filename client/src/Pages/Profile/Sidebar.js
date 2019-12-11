@@ -1,14 +1,16 @@
 import React from 'react';
+import {Link } from 'react-router-dom';
 
+import NamedRoutes from '../../Routes/NamedRoutes';
 
 const Sidebar = (props) => {
 
     return (
         <>
             <div className="d-flex justify-content-end">
-                <a href="#" className="btn btn-light mb-2">
+                <Link to={ NamedRoutes['users.settings']} className="btn btn-light mb-2">
                     Edit profile and settings. <i className="fa fa-pencil" />
-                </a>
+                </Link>
             </div>
 
             <ul className="list-group">

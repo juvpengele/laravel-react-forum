@@ -75,11 +75,13 @@ class ThreadsController extends Controller
      * Display the thread resource.
      *
      * @param Category $category
-     * @param Thread $thread
+     * @param $threadSlug
      * @return ThreadResource
      */
-    public function show(Category $category, Thread $thread)
+    public function show(Category $category, $threadSlug)
     {
+        $thread = Thread::where(['category_id' => $category->id, 'slug' => $threadSlug])->first();
+
         $thread->increment("visits_count");
 
         return new ThreadResource($thread);

@@ -84,8 +84,9 @@ const Reply = ({ thread, reply, auth, onDelete, onEdit, onLike, onMark, onRemove
         <div className={`${isBestReply() ? `best_reply`: ''}   card mb-3`}>
             <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
-                    <h5>
-                        {reply.creator.name}
+                    <h5 className="d-flex justify-content-center align-items-center">
+                        <img src={ reply.creator.avatar_link } alt="" width="20" height="20" className="mr-1"/>
+                        <span>{reply.creator.name}</span>
                     </h5>
                     <div>
                         {

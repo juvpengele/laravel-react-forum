@@ -32,7 +32,10 @@ const ThreadCard = ({ thread, onLike, auth }) => {
                      style={{ boxShadow: "0 0.5rem 0.5rem rgba(168, 165, 165, 0.15)" }}
                 >
                     <div className="card-header d-flex justify-content-between align-items-center">
-                        <div>
+                        <div className="d-flex justify-content-center align-items-center">
+                            <img src={ thread.creator.avatar_link } alt="" width="20" height="20"
+                                className="mr-2"
+                            />
                             { thread.creator.name } said:
                         </div>
                         <div className="d-flex align-items-center">
