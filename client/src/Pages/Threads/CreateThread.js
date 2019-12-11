@@ -22,7 +22,6 @@ const CreateThread = (props) => {
     if(props.auth.loggedIn) {
         JsxElement = (
             <>
-
                 <NewThreadButton onPressed={() => setShowModal(true)  } />
                 <NewThreadModal auth={props.auth} show={showModal}
                                 onClosed={() => setShowModal(false) } onSaved={ redirectToThread }

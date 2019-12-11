@@ -42,6 +42,12 @@ const authReducer = (state = INITIAL_STATE, action) => {
             Storage.setItem('avatar', action.value);
             return { ...state, avatar: action.value};
 
+        case "SAVE_PERSONAL_INFORMATION":
+            Storage.setItem('name', action.value.name);
+            Storage.setItem('email', action.value.email);
+
+            return {...state, name: action.value.name, email: action.value.email};
+
         default:
             return state;
     }
