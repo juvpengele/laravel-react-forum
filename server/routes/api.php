@@ -68,7 +68,6 @@ Route::group(["middleware" => "cors"], function () {
         Route::delete("avatar", "Users\AvatarController@destroy")->name("users.avatar.delete");
 
         Route::put("personal-information", "Users\PersonalInformationController");
-
         Route::put("password", "Auth\UpdatePasswordController");
     });
 
