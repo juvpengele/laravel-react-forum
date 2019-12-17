@@ -20,7 +20,7 @@ class UserProfileTest extends TestCase
     {
         parent::setUp();
 
-        $this->auth = create(User::class,["name" =>"John Doe", "password" => bcrypt("secret")]);
+        $this->auth = create(User::class,["name" =>"John Doe", "password" => "secret"]);
     }
 
     /** @test */
@@ -137,7 +137,7 @@ class UserProfileTest extends TestCase
     /** @test */
     public function a_user_can_change_his_password()
     {
-        $john = create(User::class,['password' => bcrypt("secret")]);
+        $john = create(User::class,['password' => "secret"]);
         $newPassword = "new password";
 
         $url = "/api/me/password?token={$john->token}";
@@ -145,7 +145,7 @@ class UserProfileTest extends TestCase
         $this->putJson($url, [
             "previous_password" => "secret",
             "password" => $newPassword,
-            "password_confirmation" =>$newPassword
+            "password_confirmation" => $newPassword
         ])->assertStatus(200);
 
         $this->assertTrue(Hash::check($newPassword, $john->fresh()->password));
@@ -154,17 +154,32 @@ class UserProfileTest extends TestCase
     /** @test */
     public function to_update_his_password_a_user_must_provide_his_actual_password()
     {
-        $john = create(User::class,['password' => bcrypt("secret")]);
-        $newPassword = "new password";
+        $newPassword = "password";
 
-        $url = "/api/me/password?token={$john->token}";
+        $url = "/api/me/password?token={$this->auth->token}";
+
+        $this->putJson($url, [
+            "previous_password" => "another password",
+            "password" => $newPassword,
+            "password_confirmation" =>$newPassword
+        ])->assertStatus(422);
+
+        $this->assertFalse(Hash::check($newPassword, $this->auth->fresh()->password));
+    }
+
+    /** @test */
+    public function to_update_a_password_a_user_must_provide_confirmed_passwords()
+    {
+        $newPassword = "password";
+
+        $url = "/api/me/password?token={$this->auth->token}";
 
         $this->putJson($url, [
             "previous_password" => "secret",
             "password" => $newPassword,
-            "password_confirmation" =>$newPassword
-        ])->assertStatus(200);
+            "password_confirmation" => "password not match"
+        ])->assertStatus(422);
 
-        $this->assertTrue(Hash::check($newPassword, $john->fresh()->password));
+        $this->assertFalse(Hash::check($newPassword, $this->auth->fresh()->password));
     }
 }
