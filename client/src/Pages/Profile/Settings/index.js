@@ -5,6 +5,7 @@ import Breadcrumb from "../../../Components/Commons/Breadcrumb";
 
 import requireAuth from '../../../Hoc/requireAuth';
 import { connect } from 'react-redux'
+import Password from "../../../Components/Profile/Settings/Password";
 
 const Settings = (props) => {
     return (
@@ -25,9 +26,7 @@ const Settings = (props) => {
             </ul>
             <div id="myTabContent" className="tab-content">
                 <PersonalInformation/>
-                <div className="tab-pane fade" id="profile">
-                    <p>Passwords</p>
-                </div>
+                <Password/>
             </div>
         </div>
     )
